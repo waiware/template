@@ -22,10 +22,10 @@
     "react-dom": "19.0.0-rc-02c0e824-20241028",
     "next": "15.0.2",
     "notistack": "^3.0.1",
-    "@mui/icons-material": "^5.16.5",
+    "@mui/icons-material": "^6.0.0",
     "@mui/lab": "^5.0.0-alpha.173",
-    "@mui/material": "^5.16.5",
-    "@mui/material-nextjs": "^5.16.4",
+    "@mui/material": "^6.0.0",
+    "@mui/material-nextjs": "^6.0.0",
     "swr": "^2.2.5",
     "url-join": "^5.0.0",
     "zod": "^3.23.8"
