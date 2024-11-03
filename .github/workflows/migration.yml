@@ -43,16 +43,16 @@ jobs:
       - name: Create .env
         shell: bash
         run: |
-          echo DATABASE_URL="${{ secrets.DATABASE_URL_FOR_MIGRATION }}" > packages/api/.env
+          echo DATABASE_URL="${{ secrets.DATABASE_URL_FOR_MIGRATION }}" > .env
       - name: Generate Scema
-        run: yarn turbo run schema:gen --filter=@repo/api
+        run: yarn schema:gen
       - name: lint:fix
         run: |
           yarn format-and-lint:fix
       - name: Migrate
         uses: nick-fields/retry@v3
         with:
-          command: yarn turbo run migrate --filter=@repo/api
+          command: yarn migrate:dev
           max_attempts: 5
           timeout_minutes: 10
           retry_on: error
