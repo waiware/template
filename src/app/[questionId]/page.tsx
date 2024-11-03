@@ -1,5 +1,6 @@
 import { Stack, Typography } from '@mui/material';
 import { notFound } from 'next/navigation';
+import { AnswerBottomInput } from '~/components/models/AnswerBottomInput';
 import { trpc } from '~/trpc/server';
 
 type Props = { params: Promise<{ questionId: string }> };
@@ -20,6 +21,8 @@ export default async function Page({ params }: Props) {
           {question.body}
         </Typography>
       </Stack>
+
+      <AnswerBottomInput />
     </Stack>
   );
 }
