@@ -1,11 +1,21 @@
 import { trpc } from '~/trpc/server';
 
 export default async function Home() {
-  const { greeting } = await trpc.hello({ text: 'テスト' });
+  const { questions } = await trpc.question.list();
 
   return (
     <div>
-      <main>{greeting}</main>
+      <main>
+        {questions.map(v => {
+          return (
+            <div key={v.id}>
+              {v.title}
+              <br />
+              {v.body}
+            </div>
+          );
+        })}
+      </main>
       <footer>{/*  */}</footer>
     </div>
   );
