@@ -1,0 +1,59 @@
+{
+  "javascript": {
+    "parser": {
+      "unsafeParameterDecoratorsEnabled": true
+    },
+    "formatter": {
+      "enabled": true,
+      "quoteStyle": "single",
+      "jsxQuoteStyle": "single",
+      "trailingCommas": "all",
+      "semicolons": "always",
+      "arrowParentheses": "asNeeded",
+      "indentWidth": 2,
+      "indentStyle": "space",
+      "lineWidth": 120,
+      "quoteProperties": "asNeeded"
+    }
+  },
+  "files": {
+    "ignore": [
+      "node_modules/",
+      "dist/",
+      "build/",
+      "**/*.test.ts",
+      "**/*.spec.ts",
+      "**/.next/**",
+      "**/next.config.js",
+      ".vscode/**",
+      "**/package.json"
+    ]
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "correctness": {
+        "noUnusedImports": "error",
+        "noUnusedVariables": "error"
+      }
+    }
+  },
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": false,
+    "ignore": [],
+    "indentWidth": 2,
+    "indentStyle": "space",
+    "lineWidth": 120
+  },
+  "json": {
+    "parser": { "allowComments": true },
+    "formatter": {
+      "enabled": true,
+      "indentStyle": "space",
+      "indentWidth": 2,
+      "lineWidth": 120
+    }
+  }
+}
