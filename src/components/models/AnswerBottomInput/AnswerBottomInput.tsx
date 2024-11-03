@@ -17,7 +17,7 @@ export const AnswerBottomInput: FC = () => {
       sx={{ boxShadow: theme => theme.shadows[1] }}
     >
       <Stack width='100%' maxWidth='500px' mx='auto' rowGap={1}>
-        <TextField multiline rows={2} variant='outlined' fullWidth />
+        <TextField multiline placeholder='質問を入力する...' rows={2} variant='outlined' fullWidth />
         <Button variant='contained' color='primary' fullWidth sx={{ fontWeight: 'bold' }} startIcon={<ChatBubble />}>
           質問する
         </Button>

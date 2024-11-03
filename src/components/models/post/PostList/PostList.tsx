@@ -25,7 +25,7 @@ export const PostList: FC<Props> = ({ questionId, userId }) => {
   }
 
   return (
-    <Stack rowGap={3}>
+    <Stack rowGap={3} pb='200px'>
       {(data?.posts || []).map(post => (
         <Box
           key={post.id}
