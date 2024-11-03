@@ -38,8 +38,33 @@ model Question {
   title String
   body  String
 
+  posts Post[]
+
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
   updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamptz()
 
   @@map("questions")
+}
+
+model Post {
+  id   String @id @default(uuid())
+  body String
+
+  questionId String   @map("question_id")
+  question   Question @relation(fields: [questionId], references: [id])
+
+  userId   String   @map("user_id") // ログインなしでも扱えるためlocalStorageに保存されたidを使う
+  postType PostType @map("post_type")
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamptz()
+
+  @@map("posts")
+}
+
+enum PostType {
+  USER
+  BOT
+
+  @@map("post_types")
 }
