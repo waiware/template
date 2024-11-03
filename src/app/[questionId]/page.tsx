@@ -2,8 +2,11 @@ import { Stack, Typography } from '@mui/material';
 import { notFound } from 'next/navigation';
 import { trpc } from '~/trpc/server';
 
-export default async function Page({ params }: { params: { questionId: string } }) {
-  const { question } = await trpc.question.get({ id: params.questionId });
+type Props = { params: Promise<{ questionId: string }> };
+
+export default async function Page({ params }: Props) {
+  const { questionId } = await params;
+  const { question } = await trpc.question.get({ id: questionId });
 
   if (!question) return notFound();
 

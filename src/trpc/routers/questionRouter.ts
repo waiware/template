@@ -1,7 +1,7 @@
-import type { Question } from '@prisma/client';
 import { z } from 'zod';
 import { prismaClient } from '~/libs/PrismaClientSingleton';
 import { baseProcedure, createTRPCRouter } from '~/trpc/init';
+import type { Question } from '~/types/modelSchema';
 
 export const questionRouter = createTRPCRouter({
   list: baseProcedure.query(async () => {

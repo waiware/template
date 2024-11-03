@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
-    "start": "next start",
+    "build": "yarn schema:gen && next build",
+    "start": "yarn schema:gen && next start",
     "lint": "yarn format-and-lint",
     "lint:fix": "yarn format-and-lint:fix",
     "format-and-lint": "biome check .",
