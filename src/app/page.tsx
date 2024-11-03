@@ -18,7 +18,7 @@ export default async function Home() {
       </Stack>
       {questions.map((v: Question) => {
         return (
-          <Link key={v.id} href={`/questions/${v.id}`} style={{ textDecoration: 'none' }}>
+          <Link key={v.id} href={`/${v.id}`} style={{ textDecoration: 'none' }}>
             <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', rowGap: 1 }}>
               <Typography variant='h6'>{v.title}</Typography>
               <Typography

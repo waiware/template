@@ -1,3 +1,5 @@
+import type { Question } from '@prisma/client';
+import { z } from 'zod';
 import { prismaClient } from '~/libs/PrismaClientSingleton';
 import { baseProcedure, createTRPCRouter } from '~/trpc/init';
 
@@ -9,4 +11,15 @@ export const questionRouter = createTRPCRouter({
       questions,
     };
   }),
+  get: baseProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ input }): Promise<{ question: Question | null }> => {
+      const question = await prismaClient.question.findFirst({
+        where: {
+          id: input.id,
+        },
+      });
+
+      return { question };
+    }),
 });
