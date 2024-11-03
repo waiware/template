@@ -8,10 +8,7 @@ export const Navbar: FC = () => {
   const { palette } = useTheme();
 
   return (
-    <Stack
-      position='static'
-      sx={{ borderBottom: `solid 1px ${palette.grey[600]}`, bgcolor: palette.background.default }}
-    >
+    <Stack position='static' sx={{ borderBottom: props => `1px solid ${props.palette.divider}` }}>
       <Container maxWidth='xl'>
         <Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
           <Link href='/' style={{ textDecoration: 'none' }}>
