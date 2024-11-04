@@ -1,16 +1,32 @@
 import { initTRPC } from '@trpc/server';
 import { cookies } from 'next/headers';
+import { prismaClient } from '~/libs/PrismaClientSingleton';
 
 /**
  * tRPC 応答時に参照できるコンテキストの生成関数.
  */
 export const createTRPCContext = async () => {
   const cookieStore = await cookies();
-  const user = cookieStore.get('userId');
-  const userId = user?.value || null;
+  const userStore = cookieStore.get('userId');
+  const userId = userStore?.value || null;
+
+  if (!userId) return { user: null };
+
+  const user = userId
+    ? await prismaClient.user.findFirst({
+        where: {
+          id: userId,
+        },
+      })
+    : await prismaClient.user.create({
+        data: {
+          id: userId,
+          name: 'ゲスト',
+        },
+      });
 
   return {
-    userId,
+    user,
   };
 };
 

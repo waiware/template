@@ -53,7 +53,9 @@ model Post {
   questionId String   @map("question_id")
   question   Question @relation(fields: [questionId], references: [id])
 
-  userId   String   @map("user_id") // ログインなしでも扱えるためlocalStorageに保存されたidを使う
+  userId String @map("user_id") // ログインなしでも扱えるためlocalStorageに保存されたidを使う
+  user   User   @relation(fields: [userId], references: [id])
+
   postType PostType @map("post_type")
 
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
@@ -67,4 +69,15 @@ enum PostType {
   BOT
 
   @@map("post_types")
+}
+
+model User {
+  id   String @id @default(uuid())
+  name String
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamptz()
+  post      Post[]
+
+  @@map("users")
 }
