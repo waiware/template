@@ -1,15 +1,18 @@
 import { initTRPC } from '@trpc/server';
-import { cache } from 'react';
+import { cookies } from 'next/headers';
 
 /**
  * tRPC 応答時に参照できるコンテキストの生成関数.
  */
-export const createTRPCContext = cache(async () => {
-  /**
-   * @see: https://trpc.io/docs/server/context
-   */
-  return { userId: 'user_123' }; // (コンテキストの例) Authorization ヘッダをパースしてユーザーIDを取り出す, など...
-});
+export const createTRPCContext = async () => {
+  const cookieStore = await cookies();
+  const user = cookieStore.get('userId');
+  const userId = user?.value || null;
+
+  return {
+    userId,
+  };
+};
 
 // Avoid exporting the entire t-object
 // since it's not very descriptive.

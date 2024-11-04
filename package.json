@@ -32,6 +32,7 @@
     "@trpc/react-query": "^11.0.0-rc.608",
     "@trpc/server": "^11.0.0-rc.608",
     "client-only": "^0.0.1",
+    "cookie": "^1.0.1",
     "next": "15.0.2",
     "notistack": "^3.0.1",
     "react": "19.0.0-rc-fb9a90fa48-20240614",
@@ -40,6 +41,7 @@
     "superjson": "^2.2.1",
     "swr": "^2.2.5",
     "url-join": "^5.0.0",
+    "uuid": "^11.0.2",
     "zod": "^3.23.8",
     "zod-prisma-types": "^3.1.8"
   },
