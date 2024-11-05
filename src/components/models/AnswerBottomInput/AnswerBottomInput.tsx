@@ -17,7 +17,11 @@ type Props = {
 };
 
 export const AnswerBottomInput: FC<Props> = ({ questionId }) => {
-  const mutation = trpc.post.create.useMutation();
+  const { mutate, isPending } = trpc.post.create.useMutation();
+  const { refetch } = trpc.post.findByQuestionId.useQuery({
+    questionId,
+  });
+
   const { control, reset, formState, handleSubmit } = useForm<InputState>({
     defaultValues: {
       body: '',
@@ -27,8 +31,15 @@ export const AnswerBottomInput: FC<Props> = ({ questionId }) => {
   });
 
   const onSubmit = handleSubmit(async ({ body }) => {
-    mutation.mutate({ body, questionId });
-    reset();
+    mutate(
+      { body, questionId },
+      {
+        onSuccess: () => {
+          reset();
+          refetch();
+        },
+      },
+    );
   });
 
   return (
@@ -56,7 +67,7 @@ export const AnswerBottomInput: FC<Props> = ({ questionId }) => {
           fullWidth
           sx={{ fontWeight: 'bold' }}
           startIcon={<ChatBubble />}
-          disabled={mutation.isPending || !formState.isValid}
+          disabled={isPending || !formState.isValid}
         >
           質問する
         </Button>
