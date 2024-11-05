@@ -30,7 +30,7 @@ export const PostList: FC<Props> = ({ questionId }) => {
       </Stack>
     );
   }
-  const isUserPostLast = data?.posts[data.posts.length - 1].postType === 'USER';
+  const isUserPostLast = data?.posts[data.posts.length - 1]?.postType === 'USER';
 
   return (
     <Stack rowGap={3} pb='200px'>

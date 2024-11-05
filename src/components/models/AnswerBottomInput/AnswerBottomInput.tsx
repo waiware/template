@@ -24,7 +24,8 @@ export const AnswerBottomInput: FC<Props> = ({ questionId }) => {
   const { data } = trpc.post.findByQuestionId.useQuery({
     questionId,
   });
-  const isUserPostLast = data?.posts[data.posts.length - 1].postType === 'USER';
+
+  const isUserPostLast = data?.posts[data?.posts.length - 1]?.postType === 'USER';
 
   const { control, reset, formState, handleSubmit } = useForm<InputState>({
     defaultValues: {
