@@ -1,17 +1,9 @@
 import { PrismaClient as PrismaClientOrigin } from '@prisma/client';
 
-export class PrismaClientSingleton {
-  private static _instance: PrismaClientOrigin | undefined;
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+const client: PrismaClientOrigin = (global as any).prismaClient || new PrismaClientOrigin();
 
-  private constructor() {}
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+if (process.env.NODE_ENV !== 'production') (global as any).prismaClient = client;
 
-  public static get instance(): PrismaClientOrigin {
-    if (!PrismaClientSingleton._instance) {
-      PrismaClientSingleton._instance = new PrismaClientOrigin();
-    }
-
-    return PrismaClientSingleton._instance;
-  }
-}
-
-export const prismaClient = PrismaClientSingleton.instance;
+export const prismaClient = client;
