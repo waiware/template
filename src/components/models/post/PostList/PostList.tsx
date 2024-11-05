@@ -1,13 +1,22 @@
 'use client';
 
 import { Lightbulb } from '@mui/icons-material';
-import { Box, Button, CircularProgress, Stack, Typography } from '@mui/material';
+import { Box, Button, CircularProgress, Stack, Typography, keyframes } from '@mui/material';
 import type { FC } from 'react';
 import { trpc } from '~/trpc/client';
 
 type Props = {
   questionId: string;
 };
+
+const fadeAnimation = keyframes`
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
 
 export const PostList: FC<Props> = ({ questionId }) => {
   const { data, isLoading } = trpc.post.findByQuestionId.useQuery({
@@ -21,6 +30,7 @@ export const PostList: FC<Props> = ({ questionId }) => {
       </Stack>
     );
   }
+  const isUserPostLast = data?.posts[data.posts.length - 1].postType === 'USER';
 
   return (
     <Stack rowGap={3} pb='200px'>
@@ -39,7 +49,23 @@ export const PostList: FC<Props> = ({ questionId }) => {
           <Typography variant='body2'>{post.body}</Typography>
         </Box>
       ))}
-      {data?.posts.length !== 0 && (
+      {isUserPostLast && (
+        <Box sx={{ py: 1, px: 2 }}>
+          <Typography
+            variant='body2'
+            sx={{
+              textAlign: 'left',
+              color: 'gray',
+              fontWeight: 'bold',
+              animation: `${fadeAnimation} 1s ease-in-out infinite alternate`,
+            }}
+          >
+            回答生成中...
+          </Typography>
+        </Box>
+      )}
+      {/* 質問中の時は表示しない */}
+      {!isUserPostLast && data?.posts.length !== 0 && (
         <Button
           variant='text'
           color='info'
