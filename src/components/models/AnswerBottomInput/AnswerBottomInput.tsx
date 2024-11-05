@@ -38,9 +38,11 @@ export const AnswerBottomInput: FC<Props> = ({ questionId }) => {
     mutate(
       { body, questionId },
       {
-        onSuccess: () => {
+        onSuccess: async () => {
           reset();
           refetch();
+          await new Promise(resolve => setTimeout(resolve, 300));
+          window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
         },
       },
     );
