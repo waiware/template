@@ -44,3 +44,16 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
 export const createTRPCRouter = t.router;
 export const createCallerFactory = t.createCallerFactory;
 export const baseProcedure = t.procedure;
+
+export const loginRequiredProcedure = t.procedure.use(
+  t.middleware(async ({ ctx, next }) => {
+    if (!ctx.user) {
+      throw new Error('Unauthorized');
+    }
+    return next({
+      ctx: {
+        user: ctx.user,
+      },
+    });
+  }),
+);

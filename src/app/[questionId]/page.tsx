@@ -17,7 +17,7 @@ export default async function Page({ params }: Props) {
     <Stack px={1} rowGap={5}>
       <QuestionInformation question={question} />
       <PostList questionId={questionId} />
-      <AnswerBottomInput />
+      <AnswerBottomInput questionId={questionId} />
     </Stack>
   );
 }
