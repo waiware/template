@@ -49,6 +49,11 @@ export const PostList: FC<Props> = ({ questionId }) => {
           <Typography variant='body2'>{post.body}</Typography>
         </Box>
       ))}
+      {data?.posts.length === 0 && (
+        <Typography variant='body2' sx={{ textAlign: 'center', color: 'gray' }}>
+          Yes or No で回答できる質問をしよう！
+        </Typography>
+      )}
       {isUserPostLast && (
         <Box sx={{ py: 1, px: 2 }}>
           <Typography
