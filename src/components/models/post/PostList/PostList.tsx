@@ -7,13 +7,11 @@ import { trpc } from '~/trpc/client';
 
 type Props = {
   questionId: string;
-  userId: string;
 };
 
-export const PostList: FC<Props> = ({ questionId, userId }) => {
+export const PostList: FC<Props> = ({ questionId }) => {
   const { data, isLoading } = trpc.post.findByQuestionId.useQuery({
     questionId,
-    userId,
   });
 
   if (isLoading) {

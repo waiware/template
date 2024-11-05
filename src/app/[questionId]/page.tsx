@@ -16,8 +16,7 @@ export default async function Page({ params }: Props) {
   return (
     <Stack px={1} rowGap={5}>
       <QuestionInformation question={question} />
-      {/* localStorage に保存した userId を取得する */}
-      <PostList questionId={questionId} userId='TODO' />
+      <PostList questionId={questionId} />
       <AnswerBottomInput />
     </Stack>
   );
