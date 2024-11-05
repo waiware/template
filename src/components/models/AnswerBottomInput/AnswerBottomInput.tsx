@@ -21,6 +21,10 @@ export const AnswerBottomInput: FC<Props> = ({ questionId }) => {
   const { refetch } = trpc.post.findByQuestionId.useQuery({
     questionId,
   });
+  const { data } = trpc.post.findByQuestionId.useQuery({
+    questionId,
+  });
+  const isUserPostLast = data?.posts[data.posts.length - 1].postType === 'USER';
 
   const { control, reset, formState, handleSubmit } = useForm<InputState>({
     defaultValues: {
@@ -67,7 +71,7 @@ export const AnswerBottomInput: FC<Props> = ({ questionId }) => {
           fullWidth
           sx={{ fontWeight: 'bold' }}
           startIcon={<ChatBubble />}
-          disabled={isPending || !formState.isValid}
+          disabled={isUserPostLast || isPending || !formState.isValid}
         >
           質問する
         </Button>
