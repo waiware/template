@@ -1,9 +1,9 @@
 import { z } from 'zod';
 import { prismaClient } from '~/libs/PrismaClientSingleton';
-import { baseProcedure, createTRPCRouter, loginRequiredProcedure } from '~/trpc/init';
+import { createTRPCRouter, loginRequiredProcedure } from '~/trpc/init';
 
 export const postRouter = createTRPCRouter({
-  findByQuestionId: baseProcedure.input(z.object({ questionId: z.string() })).query(async ({ input, ctx }) => {
+  findByQuestionId: loginRequiredProcedure.input(z.object({ questionId: z.string() })).query(async ({ input, ctx }) => {
     const posts = await prismaClient.post.findMany({
       where: {
         questionId: input.questionId,
