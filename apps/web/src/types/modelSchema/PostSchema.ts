@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { PostTypeSchema } from '../inputTypeSchemas/PostTypeSchema';
+import { PostTypeSchema } from '../inputTypeSchemas/PostTypeSchema'
 
 /////////////////////////////////////////
 // POST SCHEMA
@@ -13,8 +13,8 @@ export const PostSchema = z.object({
   userId: z.string(),
   createdAt: z.coerce.date(),
   updatedAt: z.coerce.date(),
-});
+})
 
-export type Post = z.infer<typeof PostSchema>;
+export type Post = z.infer<typeof PostSchema>
 
 export default PostSchema;
