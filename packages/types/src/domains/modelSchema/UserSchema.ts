@@ -9,8 +9,8 @@ export const UserSchema = z.object({
   name: z.string(),
   createdAt: z.coerce.date(),
   updatedAt: z.coerce.date(),
-})
+});
 
-export type User = z.infer<typeof UserSchema>
+export type User = z.infer<typeof UserSchema>;
 
 export default UserSchema;
