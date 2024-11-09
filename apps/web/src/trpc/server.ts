@@ -2,7 +2,7 @@
 
 import { createTRPCProxyClient, httpBatchLink } from '@trpc/client';
 
-import type { AppRouter } from 'api';
+import type { AppRouter } from '@repo/api';
 import urlJoin from 'url-join';
 
 export const trpcClient = createTRPCProxyClient<AppRouter>({

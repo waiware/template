@@ -1,9 +1,9 @@
 'use client';
 
+import type { AppRouter } from '@repo/api';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { httpBatchLink } from '@trpc/client';
 import { createTRPCReact } from '@trpc/react-query';
-import type { AppRouter } from 'api';
 import type React from 'react';
 import { useState } from 'react';
 import urlJoin from 'url-join';
