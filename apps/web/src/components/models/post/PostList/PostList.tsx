@@ -19,7 +19,7 @@ const fadeAnimation = keyframes`
 `;
 
 export const PostList: FC<Props> = ({ questionId }) => {
-  const { data, isLoading } = trpcClient.post.findByQuestionId.useQuery({
+  const { data: posts = [], isLoading } = trpcClient.post.findByQuestionId.useQuery({
     questionId,
   });
 
@@ -30,11 +30,11 @@ export const PostList: FC<Props> = ({ questionId }) => {
       </Stack>
     );
   }
-  const isUserPostLast = data?.posts[data.posts.length - 1]?.postType === 'USER';
+  const isUserPostLast = posts[posts.length - 1]?.postType === 'USER';
 
   return (
     <Stack rowGap={3} pb='200px'>
-      {(data?.posts || []).map(post => (
+      {(posts || []).map(post => (
         <Box
           key={post.id}
           sx={{
@@ -49,7 +49,7 @@ export const PostList: FC<Props> = ({ questionId }) => {
           <Typography variant='body2'>{post.body}</Typography>
         </Box>
       ))}
-      {data?.posts.length === 0 && (
+      {posts.length === 0 && (
         <Typography variant='body2' sx={{ textAlign: 'center', color: 'gray' }}>
           Yes or No で回答できる質問をしよう！
         </Typography>
@@ -70,7 +70,7 @@ export const PostList: FC<Props> = ({ questionId }) => {
         </Box>
       )}
       {/* 質問中の時は表示しない */}
-      {!isUserPostLast && data?.posts.length !== 0 && (
+      {!isUserPostLast && posts.length !== 0 && (
         <Button
           variant='text'
           color='info'

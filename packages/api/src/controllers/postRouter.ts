@@ -15,7 +15,7 @@ export const postRouter = router({
       },
     });
 
-    return { posts };
+    return posts;
   }),
   create: protectedProcedure
     .input(z.object({ body: z.string(), questionId: z.string() }))
@@ -30,6 +30,6 @@ export const postRouter = router({
         },
       });
 
-      return { post };
+      return post;
     }),
 });

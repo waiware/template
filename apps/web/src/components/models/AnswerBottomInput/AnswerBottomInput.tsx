@@ -21,11 +21,11 @@ export const AnswerBottomInput: FC<Props> = ({ questionId }) => {
   const { refetch } = trpcClient.post.findByQuestionId.useQuery({
     questionId,
   });
-  const { data } = trpcClient.post.findByQuestionId.useQuery({
+  const { data: posts = [] } = trpcClient.post.findByQuestionId.useQuery({
     questionId,
   });
 
-  const isUserPostLast = data?.posts[data?.posts.length - 1]?.postType === 'USER';
+  const isUserPostLast = posts[posts.length - 1]?.postType === 'USER';
 
   const { control, reset, formState, handleSubmit } = useForm<InputState>({
     defaultValues: {
