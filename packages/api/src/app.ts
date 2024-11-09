@@ -1,12 +1,15 @@
 import * as trpcExpress from '@trpc/server/adapters/express';
 import { json, urlencoded } from 'body-parser';
 import cors from 'cors';
+import { config } from 'dotenv';
 import express from 'express';
 import session from 'express-session';
 import morgan from 'morgan';
 import { postRouter } from './controllers/postRouter';
 import { questionRouter } from './controllers/questionRouter';
 import { createContext, router } from './trpc';
+
+config();
 
 export const appRouter = router({
   post: postRouter,
