@@ -5,9 +5,9 @@ import type { FC } from 'react';
 import { trpcClient } from '~/trpc/client';
 
 export const QuestionList: FC = () => {
-  const { data } = trpcClient.question.list.useQuery();
+  const { data: questions } = trpcClient.question.list.useQuery();
 
-  return (data?.questions || []).map(v => {
+  return (questions || []).map(v => {
     return (
       <Link key={v.id} href={`/${v.id}`} style={{ textDecoration: 'none' }}>
         <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', rowGap: 1 }}>

@@ -7,19 +7,15 @@ export const questionRouter = router({
   list: publicProcedure.query(async () => {
     const questions = await prismaClient.question.findMany();
 
-    return {
-      questions,
-    };
+    return questions;
   }),
-  get: publicProcedure
-    .input(z.object({ id: z.string() }))
-    .mutation(async ({ input }): Promise<{ question: Question | null }> => {
-      const question = await prismaClient.question.findFirst({
-        where: {
-          id: input.id,
-        },
-      });
+  get: publicProcedure.input(z.object({ id: z.string() })).query(async ({ input }): Promise<Question | null> => {
+    const question = await prismaClient.question.findFirst({
+      where: {
+        id: input.id,
+      },
+    });
 
-      return { question };
-    }),
+    return question;
+  }),
 });
