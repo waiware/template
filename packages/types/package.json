@@ -13,9 +13,6 @@
     "dev": "tsc -w",
     "test": "jest"
   },
-  "jest": {
-    "preset": "@repo/jest-presets/node"
-  },
   "dependencies": {
     "zod": "^3.23.8"
   },

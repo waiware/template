@@ -23,9 +23,6 @@
     "migrate:dev:reset": "yarn migrate-for-single:reset && DATABASE_URL=postgresql://app_user:local-password@localhost:5432/test?schema=public yarn migrate-for-single:reset",
     "migrate:seed": "prisma db seed --preview-feature"
   },
-  "jest": {
-    "preset": "@repo/jest-presets/node"
-  },
   "dependencies": {
     "@repo/types": "*",
     "@prisma/client": "5.21.1",
