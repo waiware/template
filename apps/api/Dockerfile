@@ -8,23 +8,23 @@ FROM base AS builder
 RUN apk update
 RUN apk add --no-cache libc6-compat
 # Set working directory
-WORKDIR /apps
+WORKDIR /packages
 RUN yarn global add turbo
 COPY . .
-RUN turbo prune api --docker
+RUN turbo prune apps/api --docker
 
 # Add lockfile and package.json's of isolated subworkspace
 FROM base AS installer
 RUN apk update
 RUN apk add --no-cache libc6-compat
-WORKDIR /apps
+WORKDIR /packages
 
 # First install dependencies (as they change less often)
-COPY --from=builder /apps/out/json/ .
+COPY --from=builder /packages/out/json/ .
 RUN yarn install
 
 # Build the project and its dependencies
-COPY --from=builder /apps/out/full/ .
+COPY --from=builder /packages/out/full/ .
 
 RUN yarn turbo run schema:gen
 
@@ -35,15 +35,15 @@ RUN yarn turbo run schema:gen
 # ARG TURBO_TOKEN
 # ENV TURBO_TOKEN=$TURBO_TOKEN
 
-RUN yarn turbo build --filter=api...
+RUN yarn turbo build --filter=apps/api...
 
 FROM base AS runner
-WORKDIR /apps
+WORKDIR /packages
 
 # Don't run production as root
 RUN addgroup --system --gid 1001 expressjs
 RUN adduser --system --uid 1001 expressjs
 USER expressjs
-COPY --from=installer /apps .
+COPY --from=installer /packages .
 
-CMD node apps/api/dist/index.js
+CMD node packages/api/dist/index.js
