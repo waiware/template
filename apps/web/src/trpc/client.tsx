@@ -5,8 +5,8 @@ import { httpBatchLink } from '@trpc/client';
 import { createTRPCReact } from '@trpc/react-query';
 import type React from 'react';
 import { useState } from 'react';
-import { makeQueryClient } from '~/trpc/query-client';
-import type { AppRouter } from '~/trpc/routers/root';
+import { makeQueryClient } from './query-client';
+import type { AppRouter } from './routers/root';
 
 /**
  * Client-Side (SPA) 向けの tRPC client.

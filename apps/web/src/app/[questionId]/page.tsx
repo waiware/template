@@ -1,9 +1,9 @@
 import { Stack } from '@mui/material';
 import { notFound } from 'next/navigation';
-import { AnswerBottomInput } from '~/components/models/AnswerBottomInput';
-import { PostList } from '~/components/models/post/PostList';
-import { QuestionInformation } from '~/components/models/question/QuestionInformation';
-import { trpc } from '~/trpc/server';
+import { AnswerBottomInput } from '../../components/models/AnswerBottomInput';
+import { PostList } from '../../components/models/post/PostList';
+import { QuestionInformation } from '../../components/models/question/QuestionInformation';
+import { trpc } from '../../trpc/server';
 
 type Props = { params: Promise<{ questionId: string }> };
 

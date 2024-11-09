@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build"
+    "build": "next build",
+    "schema:format": "yarn prisma-case-format --file=./prisma/schema.prisma --config-file=./prisma/.prisma-case-format",
+    "schema:gen": "yarn schema:format &&  yarn prisma generate --schema=./prisma/schema.prisma"
   },
   "dependencies": {
     "@emotion/cache": "^11.13.1",

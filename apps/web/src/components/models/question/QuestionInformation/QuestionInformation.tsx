@@ -2,7 +2,7 @@
 
 import { Stack, Typography } from '@mui/material';
 import type { FC } from 'react';
-import type { Question } from '~/types';
+import type { Question } from '../../../../types';
 
 type Props = {
   question: Question;

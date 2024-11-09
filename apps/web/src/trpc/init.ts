@@ -1,6 +1,6 @@
 import { initTRPC } from '@trpc/server';
 import { cookies } from 'next/headers';
-import { prismaClient } from '~/libs/PrismaClientSingleton';
+import { prismaClient } from '../libs/PrismaClientSingleton';
 
 /**
  * tRPC 応答時に参照できるコンテキストの生成関数.

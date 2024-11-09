@@ -1,4 +1,4 @@
-import { createTRPCRouter } from '~/trpc/init';
+import { createTRPCRouter } from '../../trpc/init';
 import { postRouter } from './postRouter';
 import { questionRouter } from './questionRouter';
 

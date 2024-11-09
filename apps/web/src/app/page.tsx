@@ -1,7 +1,7 @@
 import { Paper, Stack, Typography } from '@mui/material';
 import Link from 'next/link';
-import { trpc } from '~/trpc/server';
-import type { Question } from '~/types/modelSchema';
+import { trpc } from '../trpc/server';
+import type { Question } from '../types/modelSchema';
 
 export default async function Home() {
   const { questions } = await trpc.question.list();

@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { prismaClient } from '~/libs/PrismaClientSingleton';
-import { createTRPCRouter, loginRequiredProcedure } from '~/trpc/init';
+import { prismaClient } from '../../libs/PrismaClientSingleton';
+import { createTRPCRouter, loginRequiredProcedure } from '../../trpc/init';
 
 export const postRouter = createTRPCRouter({
   findByQuestionId: loginRequiredProcedure.input(z.object({ questionId: z.string() })).query(async ({ input, ctx }) => {

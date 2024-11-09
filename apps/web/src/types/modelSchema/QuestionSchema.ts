@@ -10,8 +10,8 @@ export const QuestionSchema = z.object({
   body: z.string(),
   createdAt: z.coerce.date(),
   updatedAt: z.coerce.date(),
-})
+});
 
-export type Question = z.infer<typeof QuestionSchema>
+export type Question = z.infer<typeof QuestionSchema>;
 
 export default QuestionSchema;

@@ -15,7 +15,7 @@
     "format-and-lint": "biome check .",
     "format-and-lint:fix": "biome check . --write",
     "schema:format": "yarn prisma-case-format --file=./prisma/schema.prisma --config-file=./prisma/.prisma-case-format",
-    "schema:gen": "yarn schema:format &&  yarn prisma generate --schema=./prisma/schema.prisma && yarn format-and-lint:fix",
+    "schema:gen": "turbo run schema:gen && yarn format-and-lint:fix",
     "migrate:dev": "yarn schema:format &&  yarn prisma migrate deploy --schema=./prisma/schema.prisma",
     "migrate:dev:reset": "yarn schema:format &&  yarn prisma migrate reset --skip-generate --force --schema=./prisma/schema.prisma",
     "migrate:gen": "yarn schema:gen && yarn prisma migrate dev --create-only --schema=./prisma/schema.prisma --name"

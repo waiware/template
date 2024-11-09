@@ -7,7 +7,7 @@ import type { FC } from 'react';
 import { ChatBubble } from '@mui/icons-material';
 import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { trpc } from '~/trpc/client';
+import { trpc } from '../../../trpc/client';
 
 const inputSchema = z.object({ body: z.string().min(1) });
 type InputState = z.infer<typeof inputSchema>;

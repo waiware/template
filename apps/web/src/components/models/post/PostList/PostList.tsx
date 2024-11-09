@@ -3,7 +3,7 @@
 import { Lightbulb } from '@mui/icons-material';
 import { Box, Button, CircularProgress, Stack, Typography, keyframes } from '@mui/material';
 import type { FC } from 'react';
-import { trpc } from '~/trpc/client';
+import { trpc } from '../../../../trpc/client';
 
 type Props = {
   questionId: string;
