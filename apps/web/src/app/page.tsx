@@ -1,10 +1,9 @@
 import { Paper, Stack, Typography } from '@mui/material';
 import Link from 'next/link';
-import { trpc } from '../trpc/server';
-import type { Question } from '../types/modelSchema';
+import { trpcClient } from '../trpc/server';
 
 export default async function Home() {
-  const { questions } = await trpc.question.list();
+  const { questions } = await trpcClient.question.list.query();
 
   return (
     <Stack pt={3} px={1} rowGap={3}>
@@ -16,7 +15,7 @@ export default async function Home() {
           サイコパス診断 × ウミガメのスープ
         </Typography>
       </Stack>
-      {questions.map((v: Question) => {
+      {questions.map(v => {
         return (
           <Link key={v.id} href={`/${v.id}`} style={{ textDecoration: 'none' }}>
             <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', rowGap: 1 }}>

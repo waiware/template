@@ -1,49 +1,37 @@
 'use client';
 
-import { type QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { httpBatchLink } from '@trpc/client';
 import { createTRPCReact } from '@trpc/react-query';
+import type { AppRouter } from 'api';
 import type React from 'react';
 import { useState } from 'react';
-import { makeQueryClient } from './query-client';
-import type { AppRouter } from './routers/root';
+import urlJoin from 'url-join';
+
+export const trpcClient: ReturnType<typeof createTRPCReact<AppRouter>> = createTRPCReact<AppRouter>();
 
 /**
  * Client-Side (SPA) 向けの tRPC client.
  */
-export const trpc = createTRPCReact<AppRouter>({});
-
-// tRPC client のシングルトン共有.
-let clientQueryClientSingleton: QueryClient | undefined = undefined;
-function getQueryClient() {
-  if (typeof window === 'undefined') {
-    // Server: always make a new query client
-    return makeQueryClient();
-  }
-  // Browser: use singleton pattern to keep the same query client
-  // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
-  return (clientQueryClientSingleton ??= makeQueryClient());
-}
 
 /**
  * TRPC Provider (wrapper component) for layout.tsx.
  */
 export function TRPCProvider({ children }: { children: React.ReactNode }) {
-  const queryClient = getQueryClient();
-
-  const [trpcClient] = useState(() =>
-    trpc.createClient({
+  const [queryClient] = useState(() => new QueryClient());
+  const [_trpcClient] = useState(() =>
+    trpcClient.createClient({
       links: [
         httpBatchLink({
-          url: '/api/trpc',
+          url: urlJoin(process.env.NEXT_PUBLIC_API_HOST || 'http://localhost:8080', '/trpc'),
         }),
       ],
     }),
   );
 
   return (
-    <trpc.Provider client={trpcClient} queryClient={queryClient}>
+    <trpcClient.Provider client={_trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-    </trpc.Provider>
+    </trpcClient.Provider>
   );
 }

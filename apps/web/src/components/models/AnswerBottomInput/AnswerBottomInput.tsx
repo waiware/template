@@ -7,7 +7,7 @@ import type { FC } from 'react';
 import { ChatBubble } from '@mui/icons-material';
 import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { trpc } from '../../../trpc/client';
+import { trpcClient } from '../../../trpc/client';
 
 const inputSchema = z.object({ body: z.string().min(1) });
 type InputState = z.infer<typeof inputSchema>;
@@ -17,11 +17,11 @@ type Props = {
 };
 
 export const AnswerBottomInput: FC<Props> = ({ questionId }) => {
-  const { mutate, isPending } = trpc.post.create.useMutation();
-  const { refetch } = trpc.post.findByQuestionId.useQuery({
+  const { mutate, isLoading } = trpcClient.post.create.useMutation();
+  const { refetch } = trpcClient.post.findByQuestionId.useQuery({
     questionId,
   });
-  const { data } = trpc.post.findByQuestionId.useQuery({
+  const { data } = trpcClient.post.findByQuestionId.useQuery({
     questionId,
   });
 
@@ -74,7 +74,7 @@ export const AnswerBottomInput: FC<Props> = ({ questionId }) => {
           fullWidth
           sx={{ fontWeight: 'bold' }}
           startIcon={<ChatBubble />}
-          disabled={isUserPostLast || isPending || !formState.isValid}
+          disabled={isUserPostLast || isLoading || !formState.isValid}
         >
           質問する
         </Button>

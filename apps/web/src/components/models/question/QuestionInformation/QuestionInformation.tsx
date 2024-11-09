@@ -2,10 +2,12 @@
 
 import { Stack, Typography } from '@mui/material';
 import type { FC } from 'react';
-import type { Question } from '../../../../types';
 
 type Props = {
-  question: Question;
+  question: {
+    title: string;
+    body: string;
+  };
 };
 
 export const QuestionInformation: FC<Props> = ({ question }) => {

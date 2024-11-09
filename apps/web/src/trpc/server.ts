@@ -1,12 +1,27 @@
-import 'server-only';
+'use server';
 
-import { createHydrationHelpers } from '@trpc/react-query/rsc';
-import { cache } from 'react';
-import { createCallerFactory, createTRPCContext } from '../trpc/init';
-import { appRouter } from '../trpc/routers/root';
-import { makeQueryClient } from './query-client';
+import { createTRPCProxyClient, httpBatchLink } from '@trpc/client';
 
-export const getQueryClient = cache(makeQueryClient);
-const caller = createCallerFactory(appRouter)(createTRPCContext);
+import type { AppRouter } from 'api';
+import urlJoin from 'url-join';
 
-export const { trpc, HydrateClient } = createHydrationHelpers<typeof appRouter>(caller, getQueryClient);
+export const trpcClient = createTRPCProxyClient<AppRouter>({
+  links: [
+    httpBatchLink({
+      url: urlJoin(process.env.NEXT_PUBLIC_API_HOST || 'http://localhost:8080', '/trpc'),
+      fetch: async (input, init) => {
+        const headers: HeadersInit = {
+          'Content-Type': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest',
+          'Access-Control-Allow-Credentials': 'true',
+        };
+
+        return fetch(input, {
+          ...init,
+          headers,
+          credentials: 'include',
+        });
+      },
+    }),
+  ],
+});

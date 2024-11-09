@@ -2,12 +2,13 @@
   "name": "psychopath_master",
   "private": true,
   "workspaces": [
-    "apps/*"
+    "apps/*",
+    "packages/*"
   ],
   "version": "0.1.0",
   "scripts": {
     "dev": "turbo run dev",
-    "build": "turbo run build",
+    "build": "turbo run build && yarn format-and-lint:fix",
     "start": "yarn schema:gen && next start",
     "lint": "yarn format-and-lint",
     "lint:fix": "yarn format-and-lint:fix",
@@ -15,10 +16,10 @@
     "format-and-lint": "biome check .",
     "format-and-lint:fix": "biome check . --write",
     "schema:format": "yarn prisma-case-format --file=./prisma/schema.prisma --config-file=./prisma/.prisma-case-format",
-    "schema:gen": "turbo run schema:gen && yarn format-and-lint:fix",
-    "migrate:dev": "yarn schema:format &&  yarn prisma migrate deploy --schema=./prisma/schema.prisma",
-    "migrate:dev:reset": "yarn schema:format &&  yarn prisma migrate reset --skip-generate --force --schema=./prisma/schema.prisma",
-    "migrate:gen": "yarn schema:gen && yarn prisma migrate dev --create-only --schema=./prisma/schema.prisma --name"
+    "schema:gen": "turbo run schema:gen && biome check . --write",
+    "migrate:dev": "turbo run migrate:dev",
+    "migrate:dev:reset": "turbo run migrate:dev:reset",
+    "migrate:gen": "turbo run migrate:gen --"
   },
   "dependencies": {
     "date-fns": "^4.0.0"

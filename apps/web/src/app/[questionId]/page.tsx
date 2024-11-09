@@ -3,13 +3,13 @@ import { notFound } from 'next/navigation';
 import { AnswerBottomInput } from '../../components/models/AnswerBottomInput';
 import { PostList } from '../../components/models/post/PostList';
 import { QuestionInformation } from '../../components/models/question/QuestionInformation';
-import { trpc } from '../../trpc/server';
+import { trpcClient } from '../../trpc/server';
 
 type Props = { params: Promise<{ questionId: string }> };
 
 export default async function Page({ params }: Props) {
   const { questionId } = await params;
-  const { question } = await trpc.question.get({ id: questionId });
+  const { question } = await trpcClient.question.get.mutate({ id: questionId });
 
   if (!question) return notFound();
 
