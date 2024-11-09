@@ -11,7 +11,7 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /packages
 RUN yarn global add turbo
 COPY . .
-RUN turbo prune api --docker
+RUN turbo prune @repo/api --docker
 
 # Add lockfile and package.json's of isolated subworkspace
 FROM base AS installer
@@ -35,7 +35,7 @@ RUN yarn turbo run schema:gen
 # ARG TURBO_TOKEN
 # ENV TURBO_TOKEN=$TURBO_TOKEN
 
-RUN yarn turbo build --filter=api...
+RUN yarn turbo build --filter=@repo/api...
 
 FROM base AS runner
 WORKDIR /packages
