@@ -9,7 +9,6 @@
   "scripts": {
     "dev": "turbo run dev",
     "build": "turbo run build && yarn format-and-lint:fix",
-    "start": "yarn schema:gen && next start",
     "lint": "yarn format-and-lint",
     "lint:fix": "yarn format-and-lint:fix",
     "test": "turbo run test",
