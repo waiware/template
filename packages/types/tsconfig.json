@@ -4,7 +4,6 @@
     "lib": ["ES2015", "DOM"],
     "outDir": "./dist",
     "rootDir": "./src",
-    "types": ["node"],
     "declaration": true,
     "emitDeclarationOnly": false
   },
