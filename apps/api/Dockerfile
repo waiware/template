@@ -8,7 +8,7 @@ FROM base AS builder
 RUN apk update
 RUN apk add --no-cache libc6-compat
 # Set working directory
-WORKDIR /packages
+WORKDIR /apps
 RUN yarn global add turbo
 COPY . .
 RUN turbo prune api --docker
@@ -17,14 +17,14 @@ RUN turbo prune api --docker
 FROM base AS installer
 RUN apk update
 RUN apk add --no-cache libc6-compat
-WORKDIR /packages
+WORKDIR /apps
 
 # First install dependencies (as they change less often)
-COPY --from=builder /packages/out/json/ .
+COPY --from=builder /apps/out/json/ .
 RUN yarn install
 
 # Build the project and its dependencies
-COPY --from=builder /packages/out/full/ .
+COPY --from=builder /apps/out/full/ .
 
 RUN yarn turbo run schema:gen
 
@@ -38,12 +38,12 @@ RUN yarn turbo run schema:gen
 RUN yarn turbo build --filter=api...
 
 FROM base AS runner
-WORKDIR /packages
+WORKDIR /apps
 
 # Don't run production as root
 RUN addgroup --system --gid 1001 expressjs
 RUN adduser --system --uid 1001 expressjs
 USER expressjs
-COPY --from=installer /packages .
+COPY --from=installer /apps .
 
-CMD node packages/api/dist/index.js
+CMD node apps/api/dist/index.js
