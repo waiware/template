@@ -11,7 +11,7 @@ import { createContext, router } from './trpc';
 
 config();
 
-export const appRouter = router({
+const appRouter = router({
   post: postRouter,
   question: questionRouter,
 });
