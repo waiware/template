@@ -7,7 +7,8 @@ import type { FC } from 'react';
 import { ChatBubble } from '@mui/icons-material';
 import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { trpcClient } from '../../../trpc/client';
+import { mutatePostsByQuestionId, usePostsByQuestionId } from '~/hooks/post/usePostsByQuestionId/usePostsByQuestionId';
+import { trpcClient } from '~/trpc/server';
 
 const inputSchema = z.object({ body: z.string().min(1) });
 type InputState = z.infer<typeof inputSchema>;
@@ -17,11 +18,7 @@ type Props = {
 };
 
 export const AnswerBottomInput: FC<Props> = ({ questionId }) => {
-  const { mutate, isLoading } = trpcClient.post.create.useMutation();
-  const { refetch } = trpcClient.post.findByQuestionId.useQuery({
-    questionId,
-  });
-  const { data: posts = [] } = trpcClient.post.findByQuestionId.useQuery({
+  const { data: posts = [] } = usePostsByQuestionId({
     questionId,
   });
 
@@ -36,17 +33,11 @@ export const AnswerBottomInput: FC<Props> = ({ questionId }) => {
   });
 
   const onSubmit = handleSubmit(async ({ body }) => {
-    mutate(
-      { body, questionId },
-      {
-        onSuccess: async () => {
-          reset();
-          refetch();
-          await new Promise(resolve => setTimeout(resolve, 300));
-          window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
-        },
-      },
-    );
+    await trpcClient.post.create.mutate({ body, questionId });
+    reset();
+    mutatePostsByQuestionId({ questionId });
+    await new Promise(resolve => setTimeout(resolve, 300));
+    window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
   });
 
   return (
@@ -74,7 +65,7 @@ export const AnswerBottomInput: FC<Props> = ({ questionId }) => {
           fullWidth
           sx={{ fontWeight: 'bold' }}
           startIcon={<ChatBubble />}
-          disabled={isUserPostLast || isLoading || !formState.isValid}
+          disabled={isUserPostLast || !formState.isValid}
         >
           質問する
         </Button>

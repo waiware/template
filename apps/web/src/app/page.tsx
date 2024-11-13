@@ -1,7 +1,10 @@
 import { Stack, Typography } from '@mui/material';
+import { listQuestions } from '~/actions/question';
 import { QuestionList } from '~/components/models/question/QuestionList';
 
 export default async function Home() {
+  const questions = await listQuestions();
+
   return (
     <Stack pt={3} px={1} rowGap={3}>
       <Stack pt={3} px={1} rowGap={1}>
@@ -12,7 +15,7 @@ export default async function Home() {
           サイコパス診断 × ウミガメのスープ
         </Typography>
       </Stack>
-      <QuestionList />
+      <QuestionList questions={questions} />
     </Stack>
   );
 }

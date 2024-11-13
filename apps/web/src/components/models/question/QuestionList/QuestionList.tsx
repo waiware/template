@@ -1,12 +1,13 @@
 'use client';
 
 import { Link, Paper, Typography } from '@mui/material';
+import type { Question } from '@repo/types';
 import type { FC } from 'react';
-import { trpcClient } from '~/trpc/client';
 
-export const QuestionList: FC = () => {
-  const { data: questions } = trpcClient.question.list.useQuery();
-
+type Props = {
+  questions: Question[];
+};
+export const QuestionList: FC<Props> = ({ questions }) => {
   return (questions || []).map(v => {
     return (
       <Link key={v.id} href={`/${v.id}`} style={{ textDecoration: 'none' }}>

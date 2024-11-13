@@ -3,7 +3,7 @@
 import { Lightbulb } from '@mui/icons-material';
 import { Box, Button, CircularProgress, Stack, Typography, keyframes } from '@mui/material';
 import type { FC } from 'react';
-import { trpcClient } from '../../../../trpc/client';
+import { usePostsByQuestionId } from '~/hooks/post/usePostsByQuestionId/usePostsByQuestionId';
 
 type Props = {
   questionId: string;
@@ -19,7 +19,7 @@ const fadeAnimation = keyframes`
 `;
 
 export const PostList: FC<Props> = ({ questionId }) => {
-  const { data: posts = [], isLoading } = trpcClient.post.findByQuestionId.useQuery({
+  const { data: posts = [], isLoading } = usePostsByQuestionId({
     questionId,
   });
 
