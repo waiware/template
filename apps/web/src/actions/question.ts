@@ -1,7 +1,7 @@
 'use server';
 
 import type { Question } from '@repo/types';
-import { trpcClient } from '~/trpc/server';
+import { trpcClient } from '~/trpc/client';
 import { convertStringsToDates } from '~/utils/convertStringsToDates';
 
 export const getQuestion = async ({

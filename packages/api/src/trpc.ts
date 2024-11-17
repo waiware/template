@@ -1,33 +1,46 @@
 import { initTRPC } from '@trpc/server';
 import type { CreateHTTPContextOptions } from '@trpc/server/adapters/standalone';
+import { prismaClient } from './libs/PrismaClientSingleton';
+
+function getUserIdFromCookie(cookieString: string) {
+  const cookies = cookieString.split('; ').reduce(
+    (acc, cookie) => {
+      const [key, value] = cookie.split('=');
+      acc[key] = value;
+      return acc;
+    },
+    {} as Record<string, string>,
+  );
+
+  return cookies.userId || null;
+}
 
 /**
  * tRPC 応答時に参照できるコンテキストの生成関数.
  */
-export const createContext = async ({ req: _req }: CreateHTTPContextOptions) => {
-  return { user: null };
-  // const cookieStore = await cookies();
-  // const userStore = cookieStore.get('userId');
-  // const userId = userStore?.value || null;
+export const createContext = async ({ req }: CreateHTTPContextOptions) => {
+  const userId = req.headers.cookie ? getUserIdFromCookie(req.headers.cookie) : null;
 
-  // if (!userId) return { user: null };
+  if (!userId) return { user: null };
 
-  // const user = userId
-  //   ? await prismaClient.user.findFirst({
-  //       where: {
-  //         id: userId,
-  //       },
-  //     })
-  //   : await prismaClient.user.create({
-  //       data: {
-  //         id: userId,
-  //         name: 'ゲスト',
-  //       },
-  //     });
+  let user = await prismaClient.user.findFirst({
+    where: {
+      id: userId,
+    },
+  });
 
-  // return {
-  //   user,
-  // };
+  if (!user) {
+    user = await prismaClient.user.create({
+      data: {
+        id: userId,
+        name: 'ゲスト',
+      },
+    });
+  }
+
+  return {
+    user,
+  };
 };
 
 /**
@@ -48,6 +61,7 @@ export const protectedProcedure = t.procedure.use(
     if (!ctx.user) {
       throw new Error('Unauthorized');
     }
+
     return next({
       ctx: {
         user: ctx.user,

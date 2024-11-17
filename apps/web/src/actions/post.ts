@@ -1,7 +1,7 @@
-'use server';
+'use client';
 
 import type { Post } from '@repo/types';
-import { trpcClient } from '~/trpc/server';
+import { trpcClient } from '~/trpc/client';
 import { convertStringsToDates } from '~/utils/convertStringsToDates';
 
 export const findPostsByQuestionId = async ({

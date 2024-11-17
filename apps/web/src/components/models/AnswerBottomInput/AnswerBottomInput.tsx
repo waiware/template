@@ -5,10 +5,11 @@ import { Button, Stack, TextField } from '@mui/material';
 import type { FC } from 'react';
 
 import { ChatBubble } from '@mui/icons-material';
-import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
+
+import { Controller, useForm } from 'react-hook-form';
 import { mutatePostsByQuestionId, usePostsByQuestionId } from '~/hooks/post/usePostsByQuestionId/usePostsByQuestionId';
-import { trpcClient } from '~/trpc/server';
+import { trpcClient } from '~/trpc/client';
 
 const inputSchema = z.object({ body: z.string().min(1) });
 type InputState = z.infer<typeof inputSchema>;

@@ -1,10 +1,12 @@
 import * as trpcExpress from '@trpc/server/adapters/express';
 import { json, urlencoded } from 'body-parser';
+import cookie from 'cookie-parser';
+import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import { config } from 'dotenv';
 import express from 'express';
-import session from 'express-session';
 import morgan from 'morgan';
+import { v4 } from 'uuid';
 import { postRouter } from './controllers/postRouter';
 import { questionRouter } from './controllers/questionRouter';
 import { createContext, router } from './trpc';
@@ -24,22 +26,8 @@ if (!process.env.SESSION_SECRET || !process.env.DATABASE_URL) {
   throw new Error('Please set env variables SESSION_SECRET and DATABASE_URL');
 }
 
-app.use(
-  session({
-    rolling: true,
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-      domain: process.env.MAIN_DOMAIN,
-      maxAge: 30 * 24 * 60 * 60 * 1000, // クッキーの有効期限(msec) 30日
-      path: '/',
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-    },
-  }),
-);
-
+app.use(cookieParser());
+app.use(cookie());
 app.use(express.json());
 app.disable('x-powered-by');
 app.use(morgan('dev'));
@@ -54,6 +42,25 @@ app.use(
 
 app.get('/status', (_, res) => {
   return res.json({ ok: true });
+});
+
+app.use((req, res, next) => {
+  console.log('Cookies: ', req.cookies);
+  let userId = req.cookies.userId || null;
+  if (!userId) {
+    // Cookie がない場合は新規の userId を生成
+    userId = v4();
+  }
+
+  res.cookie('userId', userId, {
+    domain: process.env.MAIN_DOMAIN,
+    maxAge: 400 * 24 * 60 * 60 * 1000, // クッキーの有効期限(msec) 400日
+    path: '/',
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
+  });
+
+  next();
 });
 
 app.use(

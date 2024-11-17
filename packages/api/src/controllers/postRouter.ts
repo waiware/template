@@ -3,12 +3,11 @@ import { prismaClient } from '../libs/PrismaClientSingleton';
 import { protectedProcedure, router } from '../trpc';
 
 export const postRouter = router({
-  findByQuestionId: protectedProcedure.input(z.object({ questionId: z.string() })).query(async ({ input }) => {
+  findByQuestionId: protectedProcedure.input(z.object({ questionId: z.string() })).query(async ({ ctx, input }) => {
     const posts = await prismaClient.post.findMany({
       where: {
         questionId: input.questionId,
-        // userId: ctx.user?.id,
-        userId: 'TODO',
+        userId: ctx.user.id,
       },
       orderBy: {
         createdAt: 'asc',
