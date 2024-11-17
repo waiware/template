@@ -1,6 +1,7 @@
 import { initTRPC } from '@trpc/server';
 import type { CreateHTTPContextOptions } from '@trpc/server/adapters/standalone';
 import { prismaClient } from './libs/PrismaClientSingleton';
+import { logger } from './libs/logger';
 
 function getUserIdFromCookie(cookieString: string) {
   const cookies = cookieString.split('; ').reduce(
@@ -20,6 +21,7 @@ function getUserIdFromCookie(cookieString: string) {
  */
 export const createContext = async ({ req }: CreateHTTPContextOptions) => {
   const userId = req.headers.cookie ? getUserIdFromCookie(req.headers.cookie) : null;
+  logger('userId', { userId, cookie: req.headers.cookie });
 
   if (!userId) return { user: null };
 
