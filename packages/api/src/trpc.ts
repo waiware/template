@@ -20,8 +20,9 @@ function getUserIdFromCookie(cookieString: string) {
  * tRPC 応答時に参照できるコンテキストの生成関数.
  */
 export const createContext = async ({ req }: CreateHTTPContextOptions) => {
-  const userId = req.headers.cookie ? getUserIdFromCookie(req.headers.cookie) : null;
-  logger('userId', { userId, cookie: req.headers.cookie });
+  const cookieString = req.headers.cookie;
+  const userId = cookieString ? getUserIdFromCookie(cookieString) : null;
+  logger('userIdを出力します', { userId, cookie: cookieString });
 
   if (!userId) return { user: null };
 

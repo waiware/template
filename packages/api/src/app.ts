@@ -9,6 +9,7 @@ import morgan from 'morgan';
 import { v4 } from 'uuid';
 import { postRouter } from './controllers/postRouter';
 import { questionRouter } from './controllers/questionRouter';
+import { logger } from './libs/logger';
 import { createContext, router } from './trpc';
 
 config();
@@ -45,12 +46,17 @@ app.get('/status', (_, res) => {
 });
 
 app.use((req, res, next) => {
-  console.log('Cookies: ', req.cookies);
   let userId = req.cookies.userId || null;
   if (!userId) {
     // Cookie がない場合は新規の userId を生成
     userId = v4();
   }
+
+  logger('Cookiesを出力します', {
+    cookies: req.cookies,
+    userId,
+    env: process.env,
+  });
 
   res.cookie('userId', userId, {
     domain: process.env.MAIN_DOMAIN,
