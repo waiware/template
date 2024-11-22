@@ -18,13 +18,12 @@ export const postRouter = router({
   }),
   create: protectedProcedure
     .input(z.object({ body: z.string(), questionId: z.string() }))
-    .mutation(async ({ input }) => {
+    .mutation(async ({ input, ctx }) => {
       const post = await prismaClient.post.create({
         data: {
           postType: 'USER',
           body: input.body,
-          // userId: ctx.user.id,
-          userId: 'TODO',
+          userId: ctx.user.id,
           questionId: input.questionId,
         },
       });
