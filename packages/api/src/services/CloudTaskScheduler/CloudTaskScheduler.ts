@@ -28,7 +28,7 @@ export class CloudTaskScheduler implements ICloudTaskScheduler {
         body: JSON.stringify(body),
       });
     } else {
-      const CloudTasksClient = require('@google-cloud/tasks');
+      const { CloudTasksClient } = require('@google-cloud/tasks');
       const client = new CloudTasksClient();
 
       const project = 'wai-ware';

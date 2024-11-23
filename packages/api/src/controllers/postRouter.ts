@@ -1,11 +1,10 @@
 import { z } from 'zod';
 import { prismaClient } from '../libs/PrismaClientSingleton';
-import { CloudTaskScheduler } from '../services/CloudTaskScheduler';
-import { cloudTaskProcedure, protectedProcedure, router } from '../trpc';
+import { protectedProcedure, router } from '../trpc';
 import { CreatePostUseCase } from '../usecases/CreatePostUseCase';
 import { GenerateReplyByBotUseCase } from '../usecases/GenerateReplyByBotUseCase';
 
-const createPostUseCase = new CreatePostUseCase(prismaClient, new CloudTaskScheduler());
+const createPostUseCase = new CreatePostUseCase(prismaClient);
 const generateReplyByBotUseCase = new GenerateReplyByBotUseCase(prismaClient);
 
 export const postRouter = router({
@@ -31,14 +30,11 @@ export const postRouter = router({
         questionId: input.questionId,
       });
 
-      return post;
-    }),
-  generateReplyByBot: cloudTaskProcedure
-    .input(z.object({ questionId: z.string(), userId: z.string() }))
-    .mutation(async ({ input }) => {
-      await generateReplyByBotUseCase.execute({
-        userId: input.userId,
-        questionId: input.questionId,
+      generateReplyByBotUseCase.execute({
+        userId: post.userId,
+        questionId: post.questionId,
       });
+
+      return post;
     }),
 });

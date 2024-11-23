@@ -5,6 +5,7 @@ export class GenerateReplyByBotUseCase {
   constructor(private readonly prismaClient: PrismaClient) {}
 
   async execute({ questionId, userId }: { questionId: string; userId: string }) {
+    await new Promise(resolve => setTimeout(resolve, 1000));
     const questionWithPosts = await this.prismaClient.question.findFirst({
       where: {
         id: questionId,
