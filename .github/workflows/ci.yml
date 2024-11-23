@@ -72,6 +72,10 @@ jobs:
         if: steps.cache-dependencies.outputs.cache-hit != 'true'
         run: yarn
 
+      - name: override env
+        run: |
+          echo DATABASE_URL="https://psychopath-master-api.wai-ware.com" > apps/web/.env
+
       - name: yarn build
         run: |
           yarn build
