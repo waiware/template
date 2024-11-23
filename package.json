@@ -22,11 +22,12 @@
   },
   "dependencies": {
     "date-fns": "^4.0.0",
+    "sweetalert2": "^11.14.5",
+    "sweetalert2-react-content": "^5.0.7",
     "typescript": "^5.3.3"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",
-    "turbo": "^2.1.1",
     "@types/body-parser": "^1.19.5",
     "@types/connect-pg-simple": "^7.0.3",
     "@types/cors": "^2.8.17",
@@ -34,7 +35,8 @@
     "@types/express-session": "^1.18.0",
     "@types/jest": "^29.5.12",
     "@types/morgan": "^1.9.9",
-    "@types/node": "^20.11.24"
+    "@types/node": "^20.11.24",
+    "turbo": "^2.1.1"
   },
   "packageManager": "yarn@1.22.22",
   "engines": {

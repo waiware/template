@@ -1,12 +1,13 @@
 'use client';
 
 import { Box, CircularProgress, Stack, Typography, keyframes } from '@mui/material';
+import type { Question } from '@repo/types';
 import type { FC } from 'react';
 import { usePostsByQuestionId } from '~/hooks/post/usePostsByQuestionId/usePostsByQuestionId';
 import { AnswerButton } from '../../answer/AnswerButton';
 
 type Props = {
-  questionId: string;
+  question: Question;
 };
 
 const fadeAnimation = keyframes`
@@ -18,9 +19,9 @@ const fadeAnimation = keyframes`
   }
 `;
 
-export const PostList: FC<Props> = ({ questionId }) => {
+export const PostList: FC<Props> = ({ question }) => {
   const { data: posts = [], isLoading } = usePostsByQuestionId({
-    questionId,
+    questionId: question.id,
   });
 
   if (isLoading) {
@@ -70,7 +71,7 @@ export const PostList: FC<Props> = ({ questionId }) => {
         </Box>
       )}
       {/* 質問中の時は表示しない */}
-      {!isUserPostLast && posts.length !== 0 && <AnswerButton questionId={questionId} />}
+      {!isUserPostLast && posts.length !== 0 && <AnswerButton question={question} />}
     </Stack>
   );
 };

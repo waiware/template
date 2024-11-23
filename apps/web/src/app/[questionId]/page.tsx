@@ -20,7 +20,7 @@ export default async function Page({ params }: Props) {
       </Box>
       <Stack rowGap={5}>
         <QuestionInformation question={question} />
-        <PostList questionId={questionId} />
+        <PostList question={question} />
         <AnswerBottomInput questionId={questionId} />
       </Stack>
     </Stack>
