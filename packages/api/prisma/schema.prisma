@@ -37,6 +37,7 @@ model Question {
   id    String @id @default(uuid())
   title String
   body  String
+  answer String @default("") // 空文字で初期化
 
   posts Post[]
 
