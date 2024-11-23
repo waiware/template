@@ -98,9 +98,9 @@ jobs:
         run: |
           yarn build
 
-      - name: yarn build
+      - name: yarn migrate
         run: |
-          yarn migrate:dev
+          DATABASE_URL=postgresql://app_user:local-password@localhost:5432/test?schema=public yarn migrate:dev
 
       - name: yarn test
         run: |
