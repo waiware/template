@@ -1,10 +1,11 @@
 import { z } from 'zod';
 import { prismaClient } from '../libs/PrismaClientSingleton';
+import { CloudTaskScheduler } from '../services/CloudTaskScheduler';
 import { cloudTaskProcedure, protectedProcedure, router } from '../trpc';
 import { CreatePostUseCase } from '../usecases/CreatePostUseCase';
 import { GenerateReplyByBotUseCase } from '../usecases/GenerateReplyByBotUseCase';
 
-const createPostUseCase = new CreatePostUseCase(prismaClient);
+const createPostUseCase = new CreatePostUseCase(prismaClient, new CloudTaskScheduler());
 const generateReplyByBotUseCase = new GenerateReplyByBotUseCase(prismaClient);
 
 export const postRouter = router({
