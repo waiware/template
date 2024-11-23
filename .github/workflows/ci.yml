@@ -98,9 +98,13 @@ jobs:
         run: |
           yarn build
 
+      - name: Create .env
+        shell: bash
+        run: |
+          echo DATABASE_URL="postgresql://app_user:local-password@localhost:5432/test?schema=public > packages/api/.env
       - name: yarn migrate
         run: |
-          DATABASE_URL=postgresql://app_user:local-password@localhost:5432/test?schema=public yarn migrate:dev
+          yarn turbo run migrate --filter=@repo/api
 
       - name: yarn test
         run: |
