@@ -75,6 +75,7 @@ jobs:
       - name: override env
         run: |
           echo DATABASE_URL="https://psychopath-master-api.wai-ware.com" > apps/web/.env
+          echo DATABASE_URL="https://psychopath-master-api.wai-ware.com/test" > packages/api/jest.setup.ts
 
       - name: yarn build
         run: |
