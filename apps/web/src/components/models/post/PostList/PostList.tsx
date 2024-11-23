@@ -1,9 +1,9 @@
 'use client';
 
-import { Lightbulb } from '@mui/icons-material';
-import { Box, Button, CircularProgress, Stack, Typography, keyframes } from '@mui/material';
+import { Box, CircularProgress, Stack, Typography, keyframes } from '@mui/material';
 import type { FC } from 'react';
 import { usePostsByQuestionId } from '~/hooks/post/usePostsByQuestionId/usePostsByQuestionId';
+import { AnswerButton } from '../../answer/AnswerButton';
 
 type Props = {
   questionId: string;
@@ -70,16 +70,7 @@ export const PostList: FC<Props> = ({ questionId }) => {
         </Box>
       )}
       {/* 質問中の時は表示しない */}
-      {!isUserPostLast && posts.length !== 0 && (
-        <Button
-          variant='text'
-          color='info'
-          sx={{ fontWeight: 'bold', width: '60%', mx: 'auto' }}
-          startIcon={<Lightbulb />}
-        >
-          答える
-        </Button>
-      )}
+      {!isUserPostLast && posts.length !== 0 && <AnswerButton questionId={questionId} />}
     </Stack>
   );
 };
