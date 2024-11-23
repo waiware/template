@@ -12,7 +12,7 @@ export class CloudTaskScheduler implements ICloudTaskScheduler {
   }: {
     domain: string;
     endpoint: string;
-    scheduleDate: Date;
+    scheduleDate?: Date;
     body: T;
   }) {
     logger('Creating scheduled task', { domain, endpoint, scheduleDate, body });
@@ -48,9 +48,11 @@ export class CloudTaskScheduler implements ICloudTaskScheduler {
             headers: {
               'Content-Type': 'application/json',
             },
-            scheduleTime: {
-              seconds: Math.floor(new Date(scheduleDate).getTime() / 1000),
-            },
+            scheduleTime: scheduleDate
+              ? {
+                  seconds: Math.floor(new Date(scheduleDate).getTime() / 1000),
+                }
+              : undefined,
           },
         },
       });

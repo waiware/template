@@ -1,5 +1,4 @@
 import type { PrismaClient } from '@prisma/client';
-import { addMinutes } from 'date-fns';
 import type { ICloudTaskScheduler } from '../../services/CloudTaskScheduler/ICloudTaskScheduler';
 
 export class CreatePostUseCase {
@@ -20,7 +19,6 @@ export class CreatePostUseCase {
 
     await this.cloudTaskScheduler.enqueueTask({
       endpoint: '/posts/generateReplyByBot',
-      scheduleDate: addMinutes(new Date(), 1),
       body: {
         userId,
         questionId,
