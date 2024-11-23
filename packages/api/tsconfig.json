@@ -4,7 +4,7 @@
     "lib": ["ES2015"],
     "outDir": "./dist",
     "rootDir": "./src",
-    "types": ["@types/jest", "@quramy/jest-prisma"]
+    "types": ["@types/jest"]
   },
   "exclude": ["node_modules"],
   "include": ["src"]
