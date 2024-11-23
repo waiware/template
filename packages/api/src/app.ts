@@ -7,6 +7,7 @@ import { config } from 'dotenv';
 import express from 'express';
 import morgan from 'morgan';
 import { v4 } from 'uuid';
+import { answerRouter } from './controllers/answerRouter';
 import { postRouter } from './controllers/postRouter';
 import { questionRouter } from './controllers/questionRouter';
 import { logger } from './libs/logger';
@@ -15,6 +16,7 @@ import { createContext, router } from './trpc';
 config();
 
 const appRouter = router({
+  answer: answerRouter,
   post: postRouter,
   question: questionRouter,
 });
