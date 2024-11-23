@@ -29,7 +29,7 @@ jobs:
           yarn format-and-lint:fix
 
   test:
-    name: test
+    name: Test
     runs-on: ubuntu-latest
     services:
       postgres:
