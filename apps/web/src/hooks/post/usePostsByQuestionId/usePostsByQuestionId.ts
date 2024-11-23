@@ -7,6 +7,7 @@ const generateKey = (questionId: string) => ({ path: findPostsByQuestionId.name,
 export const usePostsByQuestionId = ({ questionId, fallbackData }: { questionId: string; fallbackData?: Post[] }) => {
   return useSWR(generateKey(questionId), ({ questionId }) => findPostsByQuestionId({ questionId }), {
     fallbackData,
+    refreshInterval: 1000 * 5,
   });
 };
 
