@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "date-fns": "^3.6.0",
-    "@prisma/client": "5.21.1",
+    "@prisma/client": "5.22.0",
     "@repo/types": "*",
     "body-parser": "^1.20.2",
     "connect-pg-simple": "^10.0.0",
