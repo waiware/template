@@ -5,6 +5,9 @@ on:
     branches-ignore:
       - main
 
+env:
+  DATABASE_URL: postgresql://app_user:local-password@localhost:5432/test?schema=public
+
 jobs:
   lint:
     name: Lint
@@ -23,11 +26,26 @@ jobs:
 
       - name: yarn lint
         run: |
-          yarn format-and-lint
+          yarn format-and-lint:fix
 
   test:
-    name: Node.js ubuntu-latest 20.x
+    name: Test
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: app_user
+          POSTGRES_PASSWORD: local-password
+          POSTGRES_DB: test
+          TZ: UTC
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v3
@@ -72,25 +90,23 @@ jobs:
         if: steps.cache-dependencies.outputs.cache-hit != 'true'
         run: yarn
 
-      - name: yarn test
+      - name: override web env
         run: |
-          yarn test
-
-  build:
-    name: Build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out Git repository
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Install Node.js dependencies
-        run: yarn
+          echo NEXT_PUBLIC_API_HOST="https://psychopath-master-api.wai-ware.com" > apps/web/.env
 
       - name: yarn build
         run: |
           yarn build
+
+      - name: Create .env
+        shell: bash
+        run: |
+          echo DATABASE_URL="postgresql://app_user:local-password@localhost:5432/test?schema=public" > packages/api/.env
+
+      - name: yarn migrate
+        run: |
+          yarn turbo run migrate --filter=@repo/api
+
+      - name: yarn test
+        run: |
+          yarn test
