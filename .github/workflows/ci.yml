@@ -25,25 +25,6 @@ jobs:
         run: |
           yarn format-and-lint
 
-  build:
-    name: Build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out Git repository
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Install Node.js dependencies
-        run: yarn
-
-      - name: yarn build
-        run: |
-          yarn build
-
   test:
     name: test
     runs-on: ubuntu-latest
@@ -90,6 +71,10 @@ jobs:
       - name: Install Node.js dependencies
         if: steps.cache-dependencies.outputs.cache-hit != 'true'
         run: yarn
+
+      - name: yarn build
+        run: |
+          yarn build
 
       - name: yarn test
         run: |
