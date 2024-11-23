@@ -1,6 +1,7 @@
 import { ChatBubble, Lightbulb } from '@mui/icons-material';
-import { Button, Dialog, DialogContent, DialogTitle, TextField } from '@mui/material';
+import { Button, CircularProgress, Dialog, DialogContent, DialogTitle, TextField } from '@mui/material';
 import { useState, useTransition } from 'react';
+import { trpcClient } from '~/trpc/client';
 
 type Props = {
   questionId: string;
@@ -19,11 +20,12 @@ export const AnswerButton: React.FC<Props> = ({ questionId }) => {
   };
 
   async function handleSubmit(formData: FormData) {
-    const rawFormData = {
-      answer: formData.get('answer'),
-    };
-
-    console.log(rawFormData);
+    startTransition(async () => {
+      await trpcClient.answer.answer.mutate({
+        answerBody: formData.get('answer')?.toString() || '',
+        questionId,
+      });
+    });
   }
 
   return (
@@ -58,8 +60,8 @@ export const AnswerButton: React.FC<Props> = ({ questionId }) => {
               color='primary'
               fullWidth
               sx={{ fontWeight: 'bold' }}
-              startIcon={<ChatBubble />}
-              // disabled={isUserPostLast || !formState.isValid}
+              startIcon={isPending ? <CircularProgress size='16px' /> : <ChatBubble />}
+              disabled={isPending}
             >
               質問する
             </Button>
