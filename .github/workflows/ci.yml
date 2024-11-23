@@ -23,7 +23,7 @@ jobs:
 
       - name: yarn lint
         run: |
-          yarn format-and-lint
+          yarn format-and-lint:fix
 
   test:
     name: test
