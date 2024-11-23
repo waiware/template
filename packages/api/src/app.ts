@@ -9,8 +9,10 @@ import morgan from 'morgan';
 import { v4 } from 'uuid';
 import { postRouter } from './controllers/postRouter';
 import { questionRouter } from './controllers/questionRouter';
+import { prismaClient } from './libs/PrismaClientSingleton';
 import { logger } from './libs/logger';
 import { createContext, router } from './trpc';
+import { GenerateReplyByBotUseCase } from './usecases/GenerateReplyByBotUseCase';
 
 config();
 
@@ -40,6 +42,17 @@ app.use(
     credentials: true,
   }),
 );
+
+app.post('/posts/generateReplyByBot', async (req, res) => {
+  const generateReplyByBotUseCase = new GenerateReplyByBotUseCase(prismaClient);
+
+  await generateReplyByBotUseCase.execute({
+    userId: req.body.userId,
+    questionId: req.body.questionId,
+  });
+
+  return res.status(200).send('ok');
+});
 
 app.use((req, res, next) => {
   let userId = req.cookies.userId || null;

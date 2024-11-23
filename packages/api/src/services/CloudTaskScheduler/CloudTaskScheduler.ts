@@ -1,14 +1,7 @@
 import { logger } from '../../libs/logger';
 import type { ICloudTaskScheduler } from './ICloudTaskScheduler';
 
-const { CloudTasksClient } = require('@google-cloud/tasks');
-const client = new CloudTasksClient();
-
-const project = 'wai-ware';
-const queue = 'psychopath-queue';
-const location = 'asia-northeast1';
-
-const parent = client.queuePath(project, location, queue);
+const urlJoin = require('url-join');
 
 export class CloudTaskScheduler implements ICloudTaskScheduler {
   async enqueueTask<T>({
@@ -25,24 +18,44 @@ export class CloudTaskScheduler implements ICloudTaskScheduler {
     logger('Creating scheduled task', { domain, endpoint, scheduleDate, body });
 
     const apiHost = process.env.API_HOST || 'https://psychopath-master-api.wai-ware.com';
+    const url = urlJoin(apiHost, endpoint);
 
-    const [response] = await client.createTask({
-      parent,
-      task: {
-        httpRequest: {
-          httpMethod: 'POST',
-          url: `${apiHost}/trpc/${domain}.${endpoint}`,
-          body: Buffer.from(JSON.stringify({ body })).toString('base64'),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          scheduleTime: {
-            seconds: Math.floor(new Date(scheduleDate).getTime() / 1000),
+    if (process.env.NODE_ENV === 'development') {
+      await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      });
+    } else {
+      const { CloudTasksClient } = require('@google-cloud/tasks');
+      const client = new CloudTasksClient();
+
+      const project = 'wai-ware';
+      const queue = 'psychopath-queue';
+      const location = 'asia-northeast1';
+
+      const parent = client.queuePath(project, location, queue);
+
+      const [response] = await client.createTask({
+        parent,
+        task: {
+          httpRequest: {
+            httpMethod: 'POST',
+            url,
+            body: Buffer.from(JSON.stringify(body)).toString('base64'),
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            scheduleTime: {
+              seconds: Math.floor(new Date(scheduleDate).getTime() / 1000),
+            },
           },
         },
-      },
-    });
+      });
 
-    logger(`Created scheduled task ${response.name}`, { domain, endpoint, scheduleDate, body });
+      logger(`Created scheduled task ${response.name}`, { domain, endpoint, scheduleDate, body });
+    }
   }
 }

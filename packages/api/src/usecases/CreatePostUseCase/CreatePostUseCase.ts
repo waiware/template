@@ -19,8 +19,7 @@ export class CreatePostUseCase {
     });
 
     await this.cloudTaskScheduler.enqueueTask({
-      domain: 'post',
-      endpoint: 'generateReplyByBot',
+      endpoint: '/posts/generateReplyByBot',
       scheduleDate: addMinutes(new Date(), 1),
       body: {
         userId,
