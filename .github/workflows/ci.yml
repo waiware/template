@@ -100,7 +100,7 @@ jobs:
 
       - name: override api env
         run: |
-          echo DATABASE_URL = 'postgresql://app_user:local-password@localhost:5432/test?schema=public'; > packages/api/.env
+          echo DATABASE_URL=postgresql://app_user:local-password@localhost:5432/test?schema=public > packages/api/.env
 
       - name: yarn test
         run: |
