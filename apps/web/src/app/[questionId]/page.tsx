@@ -2,7 +2,7 @@ import { Box, Stack } from '@mui/material';
 import { notFound } from 'next/navigation';
 import { getQuestion } from '~/actions/question';
 import { BackLink } from '~/components/uiParts/BackLink/BackLink';
-import { AnswerBottomInput } from '../../components/models/AnswerBottomInput';
+import { AnswerBottomInput } from '../../components/models/post/AnswerBottomInput';
 import { PostList } from '../../components/models/post/PostList';
 import { QuestionInformation } from '../../components/models/question/QuestionInformation';
 
