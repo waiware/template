@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  DATABASE_URL: "postgresql://app_user:local-password@localhost:5432/test?schema=public"
+  DATABASE_URL: postgresql://app_user:local-password@localhost:5432/test?schema=public
 
 jobs:
   lint:
