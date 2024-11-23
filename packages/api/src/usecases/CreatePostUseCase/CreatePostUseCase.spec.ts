@@ -1,3 +1,4 @@
+import { createMockQuestion, createMockUser } from '@repo/types';
 import { prismaClient } from '../../libs/PrismaClientSingleton';
 import { cleanUpAllTableForTest } from '../../test-utils/cleanUpAllTableForTest';
 import { CreatePostUseCase } from './CreatePostUseCase';
@@ -6,8 +7,8 @@ const createPostUseCase = new CreatePostUseCase(prismaClient);
 
 describe('CreatePostUseCase', () => {
   beforeEach(async () => {
-    await prismaClient.user.create({ data: { id: 'user1', name: 'User1' } });
-    await prismaClient.question.create({ data: { id: 'question1', title: 'title', body: 'body' } });
+    await prismaClient.user.create({ data: createMockUser({ id: 'user1' }) });
+    await prismaClient.question.create({ data: createMockQuestion({ id: 'question1' }) });
   });
   afterEach(async () => {
     await cleanUpAllTableForTest();
