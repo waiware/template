@@ -1,4 +1,5 @@
 import * as dotenv from 'dotenv';
 dotenv.config();
 
-process.env.DATABASE_URL = 'https://psychopath-master-api.wai-ware.com/test';
+// テスト時に上書きする環境変数
+process.env.DATABASE_URL = 'postgresql://app_user:local-password@localhost:5432/test?schema=public';
