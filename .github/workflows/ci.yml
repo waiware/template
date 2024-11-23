@@ -26,7 +26,7 @@ jobs:
           yarn format-and-lint
 
   test:
-    name: Node.js ubuntu-latest 20.x
+    name: test
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
