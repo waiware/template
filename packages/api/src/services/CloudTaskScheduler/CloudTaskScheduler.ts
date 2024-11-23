@@ -1,8 +1,6 @@
 import { logger } from '../../libs/logger';
 import type { ICloudTaskScheduler } from './ICloudTaskScheduler';
 
-const urlJoin = require('url-join');
-
 export class CloudTaskScheduler implements ICloudTaskScheduler {
   async enqueueTask<T>({
     domain,
@@ -18,6 +16,7 @@ export class CloudTaskScheduler implements ICloudTaskScheduler {
     logger('Creating scheduled task', { domain, endpoint, scheduleDate, body });
 
     const apiHost = process.env.API_HOST || 'https://psychopath-master-api.wai-ware.com';
+    const urlJoin = require('url-join');
     const url = urlJoin(apiHost, endpoint);
 
     if (process.env.NODE_ENV === 'development') {
