@@ -22,7 +22,6 @@
       "dist/",
       "build/",
       "**/*.test.ts",
-      "**/*.spec.ts",
       "**/.next/**",
       "**/next.config.js",
       ".vscode/**",
