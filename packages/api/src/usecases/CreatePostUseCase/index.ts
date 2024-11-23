@@ -1,0 +1,1 @@
+export { CreatePostUseCase } from './CreatePostUseCase';
