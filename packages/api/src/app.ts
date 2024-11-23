@@ -41,10 +41,6 @@ app.use(
   }),
 );
 
-app.get('/status', (_, res) => {
-  return res.json({ ok: true });
-});
-
 app.use((req, res, next) => {
   let userId = req.cookies.userId || null;
   if (!userId) {
