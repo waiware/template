@@ -3,7 +3,7 @@ module.exports = {
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   testMatch: ['<rootDir>/src/**/+(*.)+(spec|test).+(ts|js)'],
   preset: 'ts-jest',
-  testEnvironment: '@quramy/jest-prisma/environment', // ここを追記
+  testEnvironment: 'node', // ここを追記
   moduleNameMapper: {
     '~(.*)$': '<rootDir>/src/$1',
   },

@@ -12,7 +12,7 @@
     "clean": "rm -rf dist",
     "dev": "nodemon --exec \"node -r esbuild-register ./src/index.ts\" -e .ts",
     "start": "node -r esbuild-register ./src/index.ts",
-    "test": "DATABASE_URL=postgresql://app_user:local-password@localhost:5432/test?schema=public jest",
+    "test": "jest",
     "schema:format": "yarn prisma-case-format --file=./prisma/schema.prisma --config-file=./prisma/.prisma-case-format",
     "schema:gen": "yarn schema:format && yarn prisma generate --schema=./prisma/schema.prisma",
     "migrate:gen": "yarn prisma migrate dev --create-only --schema=./prisma/schema.prisma --name",
@@ -45,7 +45,6 @@
     "cookie-parser": "1.4.7"
   },
   "devDependencies": {
-    "@quramy/jest-prisma": "^1.8.1",
     "@repo/typescript-config": "*",
     "@trpc/server": "^10.45.2",
     "@types/body-parser": "^1.19.5",
