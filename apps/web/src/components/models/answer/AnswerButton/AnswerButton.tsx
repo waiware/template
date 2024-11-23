@@ -63,7 +63,7 @@ export const AnswerButton: React.FC<Props> = ({ questionId }) => {
               startIcon={isPending ? <CircularProgress size='16px' /> : <ChatBubble />}
               disabled={isPending}
             >
-              質問する
+              {isPending ? '判定中...' : '質問する'}
             </Button>
           </DialogContent>
         </form>
