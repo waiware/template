@@ -20,18 +20,18 @@ const fadeAnimation = keyframes`
 `;
 
 export const PostList: FC<Props> = ({ question }) => {
-  const { data: posts = [], isLoading } = usePostsByQuestionId({
+  const { data: posts, isLoading } = usePostsByQuestionId({
     questionId: question.id,
   });
 
-  if (isLoading) {
+  if (!posts && isLoading) {
     return (
       <Stack display='flex' flexDirection='row' justifyContent='center'>
         <CircularProgress />
       </Stack>
     );
   }
-  const isUserPostLast = posts[posts.length - 1]?.postType === 'USER';
+  const isUserPostLast = (posts || [])[(posts || []).length - 1]?.postType === 'USER';
 
   return (
     <Stack rowGap={3} pb='240px'>
@@ -50,7 +50,7 @@ export const PostList: FC<Props> = ({ question }) => {
           <Typography variant='body2'>{post.body}</Typography>
         </Box>
       ))}
-      {posts.length === 0 && (
+      {(posts || []).length === 0 && (
         <Typography variant='body2' sx={{ textAlign: 'center', color: 'gray' }}>
           Yes or No で回答できる質問をしよう！
         </Typography>
@@ -71,7 +71,7 @@ export const PostList: FC<Props> = ({ question }) => {
         </Box>
       )}
       {/* 質問中の時は表示しない */}
-      {!isUserPostLast && posts.length !== 0 && <AnswerButton question={question} />}
+      {!isUserPostLast && (posts || []).length !== 0 && <AnswerButton question={question} />}
     </Stack>
   );
 };
