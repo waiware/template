@@ -72,3 +72,14 @@ export const protectedProcedure = t.procedure.use(
     });
   }),
 );
+
+export const cloudTaskProcedure = t.procedure.use(
+  t.middleware(async ({ next }) => {
+    // TODO: Cloud Task の認証を行う
+    // if (!ctx) {
+    //   throw new Error('Unauthorized');
+    // }
+
+    return next();
+  }),
+);

@@ -5,9 +5,11 @@ import { cleanUpAllTableForTest } from '../../test-utils/cleanUpAllTableForTest'
 import { createQuestionsFixtures } from '../../test-utils/fixtures/createQuestionsFixtures';
 import { createUsersFixtures } from '../../test-utils/fixtures/createUsersFixtures';
 
+import { CloudTaskScheduler } from '../../services/CloudTaskScheduler';
 import { CreatePostUseCase } from './CreatePostUseCase';
 
-const createPostUseCase = new CreatePostUseCase(prismaClient);
+const cloudTaskScheduler = new CloudTaskScheduler();
+const createPostUseCase = new CreatePostUseCase(prismaClient, cloudTaskScheduler);
 
 describe('CreatePostUseCase', () => {
   beforeEach(async () => {
@@ -18,7 +20,8 @@ describe('CreatePostUseCase', () => {
     await cleanUpAllTableForTest();
   });
   describe('正常系', () => {
-    it('質問を生成できる', async () => {
+    it('質問を生成し、Botの回答をリクエストする。', async () => {
+      const enqueueTaskSpy = jest.spyOn(cloudTaskScheduler, 'enqueueTask').mockImplementation();
       // ACT
       await createPostUseCase.execute({
         body: 'Example',
@@ -29,6 +32,7 @@ describe('CreatePostUseCase', () => {
       expect(await prismaClient.post.findFirst({ where: { userId: 'user1' } })).toEqual(
         expect.objectContaining({ body: 'Example' }),
       );
+      expect(enqueueTaskSpy).toHaveBeenCalled();
     });
   });
 });
