@@ -33,7 +33,7 @@ export const PostList: FC<Props> = ({ questionId }) => {
   const isUserPostLast = posts[posts.length - 1]?.postType === 'USER';
 
   return (
-    <Stack rowGap={3} pb='200px'>
+    <Stack rowGap={3} pb='240px'>
       {(posts || []).map(post => (
         <Box
           key={post.id}

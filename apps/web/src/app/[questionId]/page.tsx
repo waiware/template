@@ -1,6 +1,7 @@
-import { Stack } from '@mui/material';
+import { Box, Stack } from '@mui/material';
 import { notFound } from 'next/navigation';
 import { getQuestion } from '~/actions/question';
+import { BackLink } from '~/components/uiParts/BackLink/BackLink';
 import { AnswerBottomInput } from '../../components/models/AnswerBottomInput';
 import { PostList } from '../../components/models/post/PostList';
 import { QuestionInformation } from '../../components/models/question/QuestionInformation';
@@ -13,10 +14,15 @@ export default async function Page({ params }: Props) {
   if (!question) return notFound();
 
   return (
-    <Stack px={1} rowGap={5}>
-      <QuestionInformation question={question} />
-      <PostList questionId={questionId} />
-      <AnswerBottomInput questionId={questionId} />
+    <Stack px={1}>
+      <Box py={1}>
+        <BackLink href='/' />
+      </Box>
+      <Stack rowGap={5}>
+        <QuestionInformation question={question} />
+        <PostList questionId={questionId} />
+        <AnswerBottomInput questionId={questionId} />
+      </Stack>
     </Stack>
   );
 }
