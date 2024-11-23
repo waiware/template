@@ -101,3 +101,6 @@ jobs:
       - name: yarn test
         run: |
           yarn test
+
+      - name: Print environment variables
+        run: printenv
