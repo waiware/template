@@ -34,12 +34,13 @@ generator zod {
 }
 
 model Question {
-  id    String @id @default(uuid())
-  title String
-  body  String
+  id     String @id @default(uuid())
+  title  String
+  body   String
   answer String @default("") // 空文字で初期化
 
-  posts Post[]
+  posts   Post[]
+  answers Answer[]
 
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
   updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamptz()
@@ -72,13 +73,34 @@ enum PostType {
   @@map("post_types")
 }
 
+model Answer {
+  id   String @id @default(uuid())
+  body String
+
+  questionId String   @map("question_id")
+  question   Question @relation(fields: [questionId], references: [id])
+
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id])
+
+  isCorrect Boolean @default(false) @map("is_correct") // 正解かどうか
+  isJudging Boolean @default(true) @map("is_judging") // 正誤判定中かどうか
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamptz()
+
+  @@map("answers")
+}
+
 model User {
   id   String @id @default(uuid())
   name String
 
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
   updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamptz()
-  post      Post[]
+
+  post    Post[]
+  answers Answer[]
 
   @@map("users")
 }

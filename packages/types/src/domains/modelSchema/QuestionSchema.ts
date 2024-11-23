@@ -8,6 +8,7 @@ export const QuestionSchema = z.object({
   id: z.string(),
   title: z.string(),
   body: z.string(),
+  answer: z.string(),
   createdAt: z.coerce.date(),
   updatedAt: z.coerce.date(),
 });
