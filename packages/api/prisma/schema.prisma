@@ -39,8 +39,9 @@ model Question {
   body   String
   answer String @default("") // 空文字で初期化
 
-  posts   Post[]
-  answers Answer[]
+  posts          Post[]
+  answers        Answer[]
+  correctResults CorrectResult[]
 
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
   updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamptz()
@@ -89,6 +90,8 @@ model Answer {
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
   updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamptz()
 
+  correctResults CorrectResult[]
+
   @@map("answers")
 }
 
@@ -99,8 +102,30 @@ model User {
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
   updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamptz()
 
-  post    Post[]
-  answers Answer[]
+  post           Post[]
+  answers        Answer[]
+  correctResults CorrectResult[]
 
   @@map("users")
+}
+
+model CorrectResult {
+  id String @id @default(uuid())
+
+  questionId String   @map("question_id")
+  question   Question @relation(fields: [questionId], references: [id])
+
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id])
+
+  elapsedSeconds Int @map("elapsed_seconds") // 回答にかかった時間
+  numberOfPosts  Int @map("number_of_posts") // 質問数
+
+  answeId String @map("answe_id")
+  answer  Answer @relation(fields: [answeId], references: [id])
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamptz()
+
+  @@map("correct_results")
 }
