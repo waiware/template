@@ -1,7 +1,11 @@
 import type { PrismaClient } from '@prisma/client';
+import type { ICorrectResultCreator } from '../../services/CorrectResultCreator/ICorrectResultCreator';
 
 export class CreateAnswerUseCase {
-  constructor(private readonly prismaClient: PrismaClient) {}
+  constructor(
+    private readonly prismaClient: PrismaClient,
+    private readonly correctResultCreator: ICorrectResultCreator,
+  ) {}
 
   async execute({ body, userId, questionId }: { body: string; userId: string; questionId: string }) {
     // TODO: 回答をDifyに問い合わせる
@@ -17,6 +21,10 @@ export class CreateAnswerUseCase {
         questionId,
       },
     });
+
+    if (isCorrect) {
+      await this.correctResultCreator.execute({ answer });
+    }
 
     return answer;
   }
