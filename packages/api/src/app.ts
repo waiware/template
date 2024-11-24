@@ -8,6 +8,7 @@ import express from 'express';
 import morgan from 'morgan';
 import { v4 } from 'uuid';
 import { answerRouter } from './controllers/answerRouter';
+import { correctResultRouter } from './controllers/correctResultRouter';
 import { postRouter } from './controllers/postRouter';
 import { questionRouter } from './controllers/questionRouter';
 import { logger } from './libs/logger';
@@ -17,6 +18,7 @@ config();
 
 const appRouter = router({
   answer: answerRouter,
+  correctResult: correctResultRouter,
   post: postRouter,
   question: questionRouter,
 });
