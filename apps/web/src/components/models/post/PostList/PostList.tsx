@@ -4,7 +4,6 @@ import { Box, CircularProgress, Stack, Typography, keyframes } from '@mui/materi
 import type { Question } from '@repo/types';
 import type { FC } from 'react';
 import { usePostsByQuestionId } from '~/hooks/post/usePostsByQuestionId/usePostsByQuestionId';
-import { AnswerButton } from '../../answer/AnswerButton';
 
 type Props = {
   question: Question;
@@ -34,7 +33,7 @@ export const PostList: FC<Props> = ({ question }) => {
   const isUserPostLast = (posts || [])[(posts || []).length - 1]?.postType === 'USER';
 
   return (
-    <Stack rowGap={3} pb='240px'>
+    <Stack rowGap={3}>
       {(posts || []).map(post => (
         <Box
           key={post.id}
@@ -70,8 +69,6 @@ export const PostList: FC<Props> = ({ question }) => {
           </Typography>
         </Box>
       )}
-      {/* 質問中の時は表示しない */}
-      {!isUserPostLast && (posts || []).length !== 0 && <AnswerButton question={question} />}
     </Stack>
   );
 };
