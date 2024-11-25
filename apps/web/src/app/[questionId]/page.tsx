@@ -5,6 +5,8 @@ import { BackLink } from '~/components/uiParts/BackLink/BackLink';
 import { AnswerBottomInput } from '../../components/models/post/AnswerBottomInput';
 import { PostList } from '../../components/models/post/PostList';
 import { QuestionInformation } from '../../components/models/question/QuestionInformation';
+import { AnswerBottomInputWrapper } from './_components/AnswerBottomInputWrapper';
+import { DisplayResultOrAnswerButton } from './_components/DisplayResultOrAnswerButton';
 
 type Props = { params: Promise<{ questionId: string }> };
 
@@ -20,8 +22,13 @@ export default async function Page({ params }: Props) {
       </Box>
       <Stack rowGap={5}>
         <QuestionInformation question={question} />
-        <PostList question={question} />
-        <AnswerBottomInput questionId={questionId} />
+        <Stack rowGap={3} pb='240px'>
+          <PostList question={question} />
+          <DisplayResultOrAnswerButton question={question} />
+        </Stack>
+        <AnswerBottomInputWrapper question={question}>
+          <AnswerBottomInput questionId={questionId} />
+        </AnswerBottomInputWrapper>
       </Stack>
     </Stack>
   );

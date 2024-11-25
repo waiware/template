@@ -6,7 +6,7 @@ export const CorrectResultScalarFieldEnumSchema = z.enum([
   'userId',
   'elapsedSeconds',
   'numberOfPosts',
-  'answeId',
+  'answerId',
   'createdAt',
   'updatedAt',
 ]);

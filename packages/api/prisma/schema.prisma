@@ -121,8 +121,8 @@ model CorrectResult {
   elapsedSeconds Int @map("elapsed_seconds") // 回答にかかった時間
   numberOfPosts  Int @map("number_of_posts") // 質問数
 
-  answeId String @map("answe_id")
-  answer  Answer @relation(fields: [answeId], references: [id])
+  answerId String @map("answer_id")
+  answer   Answer @relation(fields: [answerId], references: [id])
 
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
   updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamptz()

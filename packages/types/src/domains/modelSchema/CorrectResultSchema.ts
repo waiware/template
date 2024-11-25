@@ -10,7 +10,7 @@ export const CorrectResultSchema = z.object({
   userId: z.string(),
   elapsedSeconds: z.number().int(),
   numberOfPosts: z.number().int(),
-  answeId: z.string(),
+  answerId: z.string(),
   createdAt: z.coerce.date(),
   updatedAt: z.coerce.date(),
 });
