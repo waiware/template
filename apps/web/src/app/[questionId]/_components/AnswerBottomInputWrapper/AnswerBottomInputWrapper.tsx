@@ -16,7 +16,7 @@ export const AnswerBottomInputWrapper: FC<Props> = ({ question, children }) => {
   });
 
   if (isLoadingCorrectResult) return null;
-  if (correctResult) return null;
+  if (!isLoadingCorrectResult && correctResult) return null;
 
   return children;
 };

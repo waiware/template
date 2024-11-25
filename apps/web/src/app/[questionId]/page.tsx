@@ -4,8 +4,10 @@ import { notFound } from 'next/navigation';
 import { getQuestion } from '~/actions/question';
 import { BackLink } from '~/components/uiParts/BackLink/BackLink';
 import { generateMetadataObject } from '~/utils/generateMetadataObject';
+import { AnswerBottomInput } from '../../components/models/post/AnswerBottomInput';
 import { PostList } from '../../components/models/post/PostList';
 import { QuestionInformation } from '../../components/models/question/QuestionInformation';
+import { AnswerBottomInputWrapper } from './_components/AnswerBottomInputWrapper';
 import { DisplayResultOrAnswerButton } from './_components/DisplayResultOrAnswerButton';
 
 type Props = { params: Promise<{ questionId: string }> };
@@ -37,9 +39,9 @@ export default async function Page({ params }: Props) {
           <PostList question={question} />
           <DisplayResultOrAnswerButton question={question} />
         </Stack>
-        {/* <AnswerBottomInputWrapper question={question}>
+        <AnswerBottomInputWrapper question={question}>
           <AnswerBottomInput questionId={questionId} />
-        </AnswerBottomInputWrapper> */}
+        </AnswerBottomInputWrapper>
       </Stack>
     </Stack>
   );
