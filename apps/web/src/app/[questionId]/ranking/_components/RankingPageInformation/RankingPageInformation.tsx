@@ -1,6 +1,6 @@
 'use client';
 
-import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
+import { MilitaryTech as MilitaryTechIcon } from '@mui/icons-material';
 import { Box, Stack, Typography } from '@mui/material';
 import type { Question } from '@repo/types';
 import type { FC } from 'react';
