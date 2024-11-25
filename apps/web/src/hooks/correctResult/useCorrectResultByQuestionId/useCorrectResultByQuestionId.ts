@@ -1,7 +1,7 @@
 import useSWR, { mutate } from 'swr';
 import { findCorrectResultByQuestionId } from '~/actions/correctResult';
 
-const generateKey = (questionId: string) => ({ path: findCorrectResultByQuestionId.name, questionId });
+const generateKey = (questionId: string) => ({ path: 'findCorrectResultByQuestionId', questionId });
 
 export const useCorrectResultByQuestionId = ({ questionId }: { questionId: string }) => {
   return useSWR(generateKey(questionId), ({ questionId }) => findCorrectResultByQuestionId({ questionId }));
