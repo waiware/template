@@ -45,7 +45,7 @@ export const DisplayResultOrAnswerButton: FC<Props> = ({ question }) => {
   });
 
   const {
-    data: correctResult,
+    data: correctResultWithAnswer,
     isLoading: isLoadingCorrectResult,
     mutate,
   } = useCorrectResultByQuestionId({
@@ -88,8 +88,10 @@ export const DisplayResultOrAnswerButton: FC<Props> = ({ question }) => {
 
   return (
     <>
-      {!!correctResult && <CorrectResultInformation correctResult={correctResult} questionAnswer={question.answer} />}
-      {!correctResult && !isUserPostLast && (posts || []).length !== 0 && (
+      {!!correctResultWithAnswer && (
+        <CorrectResultInformation correctResultWithAnswer={correctResultWithAnswer} questionAnswer={question.answer} />
+      )}
+      {!correctResultWithAnswer && !isUserPostLast && (posts || []).length !== 0 && (
         <AnswerButton handleClick={() => handleClickOpen()} />
       )}
       <Dialog fullWidth open={open} onClose={handleClose}>

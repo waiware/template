@@ -12,6 +12,9 @@ export const correctResultRouter = router({
       orderBy: {
         createdAt: 'asc',
       },
+      include: {
+        answer: true,
+      },
     });
 
     return correctResult;
