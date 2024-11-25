@@ -23,7 +23,10 @@ describe('CreatePostUseCase', () => {
   describe('正常系', () => {
     it('答えに紐づく質問を元に経過時間を算出し、回答結果データを生成する', async () => {
       // ARRANGE
-      await createPostsFixtures([createMockPost({ questionId: 'question1' })]);
+      await createPostsFixtures([
+        createMockPost({ id: 'post1', questionId: 'question1', postType: 'USER' }),
+        createMockPost({ id: 'post2', questionId: 'question1', postType: 'BOT' }),
+      ]);
 
       // ACT
       await correctResultCreator.execute({ answer });
@@ -32,7 +35,7 @@ describe('CreatePostUseCase', () => {
         expect.objectContaining({
           questionId: answer.questionId,
           elapsedSeconds: expect.any(Number),
-          numberOfPosts: 1,
+          numberOfPosts: 1, // USERの投稿のみをカウント
         }),
       );
     });

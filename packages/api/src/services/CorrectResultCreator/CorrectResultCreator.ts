@@ -21,6 +21,7 @@ export class CorrectResultCreator implements ICorrectResultCreator {
         where: {
           questionId: answer.questionId,
           userId: answer.userId,
+          postType: 'USER',
         },
       }),
     ]);
