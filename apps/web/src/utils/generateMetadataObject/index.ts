@@ -1,0 +1,1 @@
+export { generateMetadataObject } from './generateMetadataObject';
