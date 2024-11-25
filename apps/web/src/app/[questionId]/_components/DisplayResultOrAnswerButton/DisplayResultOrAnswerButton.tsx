@@ -89,7 +89,7 @@ export const DisplayResultOrAnswerButton: FC<Props> = ({ question }) => {
   return (
     <>
       {!!correctResultWithAnswer && (
-        <CorrectResultInformation correctResultWithAnswer={correctResultWithAnswer} questionAnswer={question.answer} />
+        <CorrectResultInformation correctResultWithAnswer={correctResultWithAnswer} question={question} />
       )}
       {!correctResultWithAnswer && !isUserPostLast && (posts || []).length !== 0 && (
         <AnswerButton handleClick={() => handleClickOpen()} />
