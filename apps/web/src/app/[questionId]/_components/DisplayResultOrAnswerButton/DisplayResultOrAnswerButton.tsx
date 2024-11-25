@@ -52,6 +52,8 @@ export const DisplayResultOrAnswerButton: FC<Props> = ({ question }) => {
     questionId: question.id,
   });
 
+  console.log(correctResultWithAnswer, 55);
+
   async function handleSubmit(formData: FormData) {
     startTransition(async () => {
       const result = await trpcClient.answer.answer.mutate({
@@ -88,7 +90,7 @@ export const DisplayResultOrAnswerButton: FC<Props> = ({ question }) => {
 
   return (
     <>
-      {!!correctResultWithAnswer && (
+      {correctResultWithAnswer && (
         <CorrectResultInformation correctResultWithAnswer={correctResultWithAnswer} question={question} />
       )}
       {!correctResultWithAnswer && !isUserPostLast && (posts || []).length !== 0 && (

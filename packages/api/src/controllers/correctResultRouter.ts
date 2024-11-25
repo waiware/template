@@ -9,9 +9,6 @@ export const correctResultRouter = router({
         questionId: input.questionId,
         userId: ctx.user.id,
       },
-      orderBy: {
-        createdAt: 'asc',
-      },
       include: {
         answer: true,
       },
