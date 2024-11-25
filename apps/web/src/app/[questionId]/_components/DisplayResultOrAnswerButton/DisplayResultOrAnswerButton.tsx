@@ -7,6 +7,7 @@ import {
   Dialog,
   DialogContent,
   DialogTitle,
+  Link,
   Stack,
   TextField,
   Typography,
@@ -59,20 +60,24 @@ export const DisplayResultOrAnswerButton: FC<Props> = ({ question }) => {
         questionId: question.id,
       });
       setOpen(false);
-
-      if (result.isCorrect) mutate();
+      mutate();
 
       MySwal.fire({
         title: result.isCorrect ? '正解 🎉' : '不正解 😭',
         text: result.isCorrect ? question.answer : undefined,
         footer: result.isCorrect ? (
-          <Stack>
+          <Stack textAlign='center' alignItems='center' justifyContent='center'>
             <Typography variant='caption' color='textSecondary'>
               この問題はどうでしたか？
             </Typography>
-            <Typography variant='caption' color='textSecondary'>
-              ランキングを見る
-            </Typography>
+            <Link
+              sx={{ textDecoration: 'none', width: 'fit-content', ':hover': { opacity: 0.7 } }}
+              href={`/${question.id}/ranking`}
+            >
+              <Typography variant='caption' textAlign='center'>
+                ランキングを見る
+              </Typography>
+            </Link>
           </Stack>
         ) : undefined,
         confirmButtonText: result.isCorrect ? '閉じる' : 'もう一度挑戦する',

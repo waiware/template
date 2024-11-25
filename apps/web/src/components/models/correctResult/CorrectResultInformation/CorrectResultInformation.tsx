@@ -1,5 +1,5 @@
 import { CheckCircle } from '@mui/icons-material';
-import { Box, Divider, Paper, Stack, Typography } from '@mui/material';
+import { Box, Divider, Link, Paper, Stack, Typography } from '@mui/material';
 import type { Answer, CorrectResult, Question } from '@repo/types';
 import urlJoin from 'url-join';
 import { formatSecondsToDisplayTime } from '~/utils/formatSecondsToDisplayTime';
@@ -79,6 +79,17 @@ export const CorrectResultInformation: React.FC<Props> = ({ correctResultWithAns
             </Typography>
           </Box>
           <Typography variant='body2'>{question.answer}</Typography>
+          <Box display='flex' justifyContent='center' alignItems='center'>
+            <Link
+              color='info'
+              sx={{ textDecoration: 'none', width: 'fit-content', ':hover': { opacity: 0.7 } }}
+              href={`/${question.id}/ranking`}
+            >
+              <Typography variant='caption' textAlign='center'>
+                ランキングを見る
+              </Typography>
+            </Link>
+          </Box>
         </Stack>
       </Stack>
     </Paper>
