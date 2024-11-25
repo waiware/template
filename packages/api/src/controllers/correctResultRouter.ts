@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { prismaClient } from '../libs/PrismaClientSingleton';
-import { protectedProcedure, router } from '../trpc';
+import { protectedProcedure, publicProcedure, router } from '../trpc';
 
 export const correctResultRouter = router({
   findByQuestionId: protectedProcedure.input(z.object({ questionId: z.string() })).query(async ({ ctx, input }) => {
@@ -15,5 +15,14 @@ export const correctResultRouter = router({
     });
 
     return correctResult;
+  }),
+  list: publicProcedure.input(z.object({ questionId: z.string() })).query(async ({ input }) => {
+    const correctResults = await prismaClient.correctResult.findMany({
+      where: {
+        questionId: input.questionId,
+      },
+    });
+
+    return correctResults;
   }),
 });
