@@ -27,7 +27,7 @@ export default async function Page({ params }: Props) {
   return (
     <Stack px={1}>
       <Box py={1}>
-        <BackLink href={`/${question.id}`} />
+        <BackLink href={`/${question.id}`} text='問題に戻る' />
       </Box>
       <Stack rowGap={5}>
         <RankingPageInformation question={question} />

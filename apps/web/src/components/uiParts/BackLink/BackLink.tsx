@@ -6,9 +6,10 @@ import type { FC } from 'react';
 
 type Props = {
   href: string;
+  text?: string;
 };
 
-export const BackLink: FC<Props> = ({ href }) => {
+export const BackLink: FC<Props> = ({ href, text = '一覧に戻る' }) => {
   return (
     <Link
       color='inherit'
@@ -30,7 +31,7 @@ export const BackLink: FC<Props> = ({ href }) => {
           marginRight: '0.5rem',
         }}
       />
-      一覧へ戻る
+      {text}
     </Link>
   );
 };
