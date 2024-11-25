@@ -6,7 +6,7 @@ import { formatSecondsToDisplayTime } from '~/utils/formatSecondsToDisplayTime';
 
 type Props = {
   correctResultWithAnswer: CorrectResult & {
-    answer: Answer;
+    answer?: Answer;
   };
   question: Question;
 };
@@ -28,7 +28,7 @@ export const CorrectResultInformation: React.FC<Props> = ({ correctResultWithAns
                 <Typography variant='body2' sx={{ color: props => props.palette.text.secondary }}>
                   回答
                 </Typography>
-                <Typography variant='body2'>{correctResultWithAnswer.answer.body}</Typography>
+                <Typography variant='body2'>{correctResultWithAnswer.answer?.body}</Typography>
               </Stack>
               <Stack rowGap={0.5}>
                 <Typography variant='body2' sx={{ color: props => props.palette.text.secondary }}>

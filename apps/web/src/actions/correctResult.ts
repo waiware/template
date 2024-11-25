@@ -14,6 +14,6 @@ export const findCorrectResultByQuestionId = async ({
   });
 
   return correctResultWithAnswer
-    ? convertStringsToDates<CorrectResult & { answer: Answer }>(correctResultWithAnswer)
+    ? convertStringsToDates<CorrectResult & { answer?: Answer }>(correctResultWithAnswer)
     : null;
 };
