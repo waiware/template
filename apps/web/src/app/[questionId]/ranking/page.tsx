@@ -28,7 +28,7 @@ export default async function Page({ params }: Props) {
   return (
     <Stack px={1}>
       <PageSubNavigation question={question} />
-      <Stack rowGap={5} pb={3}>
+      <Stack rowGap={3} pb={3}>
         <RankingPageInformation question={question} />
         <CorrectResultRanking question={question} />
       </Stack>
