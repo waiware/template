@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getQuestion } from '~/actions/question';
 import { generateMetadataObject } from '~/utils/generateMetadataObject';
+import { CorrectResultRanking } from './_components/CorrectResultRanking';
 import { PageSubNavigation } from './_components/PageSubNavigation';
 import { RankingPageInformation } from './_components/RankingPageInformation';
 
@@ -29,6 +30,7 @@ export default async function Page({ params }: Props) {
       <PageSubNavigation question={question} />
       <Stack rowGap={5}>
         <RankingPageInformation question={question} />
+        <CorrectResultRanking question={question} />
       </Stack>
     </Stack>
   );

@@ -1,0 +1,1 @@
+export { CorrectResultRanking } from './CorrectResultRanking';
