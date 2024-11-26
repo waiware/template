@@ -1,14 +1,14 @@
-import { Box, Stack } from '@mui/material';
+import { Stack } from '@mui/material';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getQuestion } from '~/actions/question';
-import { BackLink } from '~/components/uiParts/BackLink/BackLink';
 import { generateMetadataObject } from '~/utils/generateMetadataObject';
 import { AnswerBottomInput } from '../../components/models/post/AnswerBottomInput';
 import { PostList } from '../../components/models/post/PostList';
 import { QuestionInformation } from '../../components/models/question/QuestionInformation';
 import { AnswerBottomInputWrapper } from './_components/AnswerBottomInputWrapper';
 import { DisplayResultOrAnswerButton } from './_components/DisplayResultOrAnswerButton';
+import { PageSubNavigation } from './_components/PageSubNavigation';
 
 type Props = { params: Promise<{ questionId: string }> };
 
@@ -30,9 +30,7 @@ export default async function Page({ params }: Props) {
 
   return (
     <Stack px={1}>
-      <Box py={1}>
-        <BackLink href='/' />
-      </Box>
+      <PageSubNavigation question={question} />
       <Stack rowGap={5}>
         <QuestionInformation question={question} />
         <Stack rowGap={3} pb='240px'>
