@@ -11,6 +11,7 @@ import { answerRouter } from './controllers/answerRouter';
 import { correctResultRouter } from './controllers/correctResultRouter';
 import { postRouter } from './controllers/postRouter';
 import { questionRouter } from './controllers/questionRouter';
+import { userRouter } from './controllers/userRouter';
 import { logger } from './libs/logger';
 import { createContext, router } from './trpc';
 
@@ -21,6 +22,7 @@ const appRouter = router({
   correctResult: correctResultRouter,
   post: postRouter,
   question: questionRouter,
+  user: userRouter,
 });
 // export type definition of API
 export type AppRouter = typeof appRouter;
