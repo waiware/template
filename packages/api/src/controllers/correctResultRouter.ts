@@ -17,12 +17,23 @@ export const correctResultRouter = router({
     return correctResult;
   }),
   list: publicProcedure.input(z.object({ questionId: z.string() })).query(async ({ input }) => {
-    const correctResults = await prismaClient.correctResult.findMany({
+    const correctResultsWithUser = await prismaClient.correctResult.findMany({
       where: {
         questionId: input.questionId,
       },
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
+      orderBy: {
+        elapsedSeconds: 'asc',
+      },
     });
 
-    return correctResults;
+    return correctResultsWithUser;
   }),
 });
