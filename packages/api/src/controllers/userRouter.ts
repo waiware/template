@@ -3,12 +3,10 @@ import { protectedProcedure, router } from '../trpc';
 
 export const userRouter = router({
   getCurrentUser: protectedProcedure.query(async ({ ctx }) => {
-    const currentUser = await prismaClient.question.findFirst({
+    return prismaClient.user.findFirst({
       where: {
         id: ctx.user.id,
       },
     });
-
-    return currentUser;
   }),
 });
