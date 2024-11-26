@@ -15,7 +15,7 @@ type Props = {
 export const PageSubNavigation: FC<Props> = ({ question }) => {
   return (
     <Box py={1} display='flex' alignItems='center' justifyContent='space-between'>
-      <BackLink href={`/${question.id}`} />
+      <BackLink href={'/'} />
       <Box display='flex' alignItems='center' columnGap={1}>
         <Link
           sx={{ height: 20, width: 20, textDecoration: 'none', ':hover': { opacity: 0.7 } }}
