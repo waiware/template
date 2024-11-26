@@ -1,6 +1,6 @@
 'use client';
 
-import type { Answer, CorrectResult } from '@repo/types';
+import type { Answer, CorrectResult, User } from '@repo/types';
 import { trpcClient } from '~/trpc/client';
 import { convertStringsToDates } from '~/utils/convertStringsToDates';
 
@@ -27,5 +27,5 @@ export const findCorrectResultsByQuestionId = async ({
     questionId,
   });
 
-  return correctResults.map(convertStringsToDates<CorrectResult>);
+  return correctResults.map(convertStringsToDates<CorrectResult & { user: User }>);
 };
