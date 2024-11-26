@@ -42,7 +42,7 @@ export const CorrectResultRanking: FC<Props> = ({ question }) => {
             </Box>
             <Box display='flex' columnGap={2} alignItems='center'>
               <Typography variant='caption' color='textSecondary' width='50%'>
-                {formatSecondsToDisplayTime(correctResult.elapsedSeconds)}
+                回答時間 {formatSecondsToDisplayTime(correctResult.elapsedSeconds)}
               </Typography>
               <Typography variant='caption' color='textSecondary' width='50%'>
                 質問回数 {correctResult.numberOfPosts}回
