@@ -2,9 +2,10 @@
 
 import type { FC } from 'react';
 
-import { Box, CircularProgress, Paper, Stack, Typography } from '@mui/material';
+import { Box, Chip, CircularProgress, Paper, Stack, Typography } from '@mui/material';
 import type { Question } from '@repo/types';
 import { useCorrectResultsByQuestionId } from '~/hooks/correctResult/useCorrectResultsByQuestionId';
+import { useCurrentUser } from '~/hooks/user/useCurrentUser/useCurrentUser';
 import { formatSecondsToDisplayTime } from '~/utils/formatSecondsToDisplayTime';
 
 type Props = {
@@ -12,11 +13,12 @@ type Props = {
 };
 
 export const CorrectResultRanking: FC<Props> = ({ question }) => {
-  const { data: correctResults, isLoading } = useCorrectResultsByQuestionId({
+  const { data: currentUser, isLoading: isLoadingCurrentUser } = useCurrentUser();
+  const { data: correctResults, isLoading: isLoadingCorrectResults } = useCorrectResultsByQuestionId({
     questionId: question.id,
   });
 
-  if (isLoading) {
+  if (isLoadingCorrectResults || isLoadingCurrentUser) {
     return (
       <Stack display='flex' flexDirection='row' justifyContent='center'>
         <CircularProgress />
@@ -26,31 +28,43 @@ export const CorrectResultRanking: FC<Props> = ({ question }) => {
 
   return (
     <Stack rowGap={1}>
-      {correctResults?.map((correctResult, index) => (
-        <Paper
-          key={correctResult.id}
-          sx={{ py: 1, px: 2, borderRadius: 2, border: props => `${props.palette.divider} 1px solid` }}
-          square
-          elevation={0}
-        >
-          <Stack>
-            <Box display='flex' columnGap={2} alignItems='baseline'>
-              <Typography variant={'h6'} sx={{ fontWeight: 'bold' }}>
-                {index + 1}位
-              </Typography>
-              <Typography variant='body1'>{correctResult.user.name}</Typography>
-            </Box>
-            <Box display='flex' columnGap={2} alignItems='center'>
-              <Typography variant='caption' color='textSecondary' width='50%'>
-                回答時間 {formatSecondsToDisplayTime(correctResult.elapsedSeconds)}
-              </Typography>
-              <Typography variant='caption' color='textSecondary' width='50%'>
-                質問回数 {correctResult.numberOfPosts}回
-              </Typography>
-            </Box>
-          </Stack>
-        </Paper>
-      ))}
+      {correctResults?.map((correctResult, index) => {
+        const isCurrentUserResult = correctResult.userId === currentUser?.id;
+        return (
+          <Paper
+            key={correctResult.id}
+            sx={{
+              py: 1,
+              px: 2,
+              borderRadius: 2,
+              border: props =>
+                isCurrentUserResult ? `${props.palette.primary.main} 2px solid` : `${props.palette.divider} 2px solid`,
+            }}
+            square
+            elevation={0}
+          >
+            <Stack>
+              <Box display='flex' columnGap={2} alignItems='center'>
+                <Typography variant={'h6'} sx={{ fontWeight: 'bold' }}>
+                  {index + 1}位
+                </Typography>
+                <Box display='flex' columnGap={1} alignItems='center'>
+                  <Typography variant='body1'>{correctResult.user.name}</Typography>
+                  {isCurrentUserResult && <Chip color='primary' size='small' label='You' sx={{ fontWeight: 'bold' }} />}
+                </Box>
+              </Box>
+              <Box display='flex' columnGap={2} alignItems='center'>
+                <Typography variant='caption' color='textSecondary' width='50%'>
+                  回答時間 {formatSecondsToDisplayTime(correctResult.elapsedSeconds)}
+                </Typography>
+                <Typography variant='caption' color='textSecondary' width='50%'>
+                  質問回数 {correctResult.numberOfPosts}回
+                </Typography>
+              </Box>
+            </Stack>
+          </Paper>
+        );
+      })}
     </Stack>
   );
 };
