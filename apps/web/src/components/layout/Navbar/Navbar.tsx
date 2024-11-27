@@ -1,5 +1,6 @@
 'use client';
 
+import { Settings as SettingsIcon } from '@mui/icons-material';
 import { Container, Stack, Toolbar, Typography, useTheme } from '@mui/material';
 import Link from 'next/link';
 import type { FC } from 'react';
@@ -31,6 +32,9 @@ export const Navbar: FC = () => {
             >
               サイコパスマスター
             </Typography>
+          </Link>
+          <Link href='/settings' style={{ textDecoration: 'none', color: '#333' }}>
+            <SettingsIcon />
           </Link>
         </Toolbar>
       </Container>

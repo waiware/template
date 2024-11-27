@@ -10,7 +10,7 @@ export const userRouter = router({
       },
     });
   }),
-  updateCurrentUserName: protectedProcedure.input(z.object({ name: z.string() })).query(async ({ ctx, input }) => {
+  updateCurrentUserName: protectedProcedure.input(z.object({ name: z.string() })).mutation(async ({ ctx, input }) => {
     return prismaClient.user.update({
       where: {
         id: ctx.user.id,
