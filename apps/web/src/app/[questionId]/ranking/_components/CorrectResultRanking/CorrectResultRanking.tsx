@@ -2,7 +2,7 @@
 
 import type { FC } from 'react';
 
-import { Box, Chip, CircularProgress, Paper, Stack, Typography } from '@mui/material';
+import { Box, Chip, CircularProgress, Link, Paper, Stack, Typography } from '@mui/material';
 import type { Question } from '@repo/types';
 import { useCorrectResultsByQuestionId } from '~/hooks/correctResult/useCorrectResultsByQuestionId';
 import { useCurrentUser } from '~/hooks/user/useCurrentUser/useCurrentUser';
@@ -51,6 +51,16 @@ export const CorrectResultRanking: FC<Props> = ({ question }) => {
                 <Box display='flex' columnGap={1} alignItems='center'>
                   <Typography variant='body1'>{correctResult.user.name}</Typography>
                   {isCurrentUserResult && <Chip color='primary' size='small' label='You' sx={{ fontWeight: 'bold' }} />}
+                  {currentUser?.name === 'ゲスト' && (
+                    <Link
+                      sx={{ textDecoration: 'none', width: 'fit-content', ':hover': { opacity: 0.7 } }}
+                      href='/settings'
+                    >
+                      <Typography variant='caption' textAlign='center'>
+                        名前を変更する
+                      </Typography>
+                    </Link>
+                  )}
                 </Box>
               </Box>
               <Box display='flex' columnGap={2} alignItems='center'>
