@@ -1,3 +1,4 @@
+import z from 'zod';
 import { prismaClient } from '../libs/PrismaClientSingleton';
 import { protectedProcedure, router } from '../trpc';
 
@@ -6,6 +7,16 @@ export const userRouter = router({
     return prismaClient.user.findFirst({
       where: {
         id: ctx.user.id,
+      },
+    });
+  }),
+  updateCurrentUserName: protectedProcedure.input(z.object({ name: z.string() })).query(async ({ ctx, input }) => {
+    return prismaClient.user.update({
+      where: {
+        id: ctx.user.id,
+      },
+      data: {
+        name: input.name,
       },
     });
   }),
