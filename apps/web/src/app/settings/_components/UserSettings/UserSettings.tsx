@@ -77,7 +77,7 @@ export const UserSettingsCore: FC<{ currentUser: User }> = ({ currentUser }) => 
               fullWidth
               error={Boolean(formState.errors.name)}
               helperText={formState.errors.name?.message}
-              sx={{ background: 'white' }}
+              sx={{ '.MuiInputBase-root': { background: 'white' } }}
             />
           )}
         />
