@@ -21,3 +21,9 @@ export const listQuestions = async () => {
 
   return questions.map<Question>(convertStringsToDates);
 };
+
+export const listQuestionsForAdmin = async () => {
+  const questions = await trpcClient.question.listForAdmin.query();
+
+  return questions.map<Question & { correctResultsCount: number }>(convertStringsToDates);
+};

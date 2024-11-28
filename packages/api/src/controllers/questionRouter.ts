@@ -16,6 +16,22 @@ export const questionRouter = router({
       },
     });
   }),
+  listForAdmin: publicProcedure.query(async () => {
+    const questions = await prismaClient.question.findMany({
+      orderBy: {
+        publishedAt: 'desc',
+      },
+      include: {
+        correctResults: {
+          select: {
+            id: true,
+          },
+        },
+      },
+    });
+
+    return questions.map(({ correctResults, ...v }) => ({ ...v, correctResultsCount: correctResults.length }));
+  }),
   get: publicProcedure.input(z.object({ id: z.string() })).query(async ({ input }): Promise<Question | null> => {
     const question = await prismaClient.question.findFirst({
       where: {
