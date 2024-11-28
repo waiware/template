@@ -51,7 +51,7 @@ export const CorrectResultRanking: FC<Props> = ({ question }) => {
                 <Box display='flex' columnGap={1} alignItems='center'>
                   <Typography variant='body1'>{correctResult.user.name}</Typography>
                   {isCurrentUserResult && <Chip color='primary' size='small' label='You' sx={{ fontWeight: 'bold' }} />}
-                  {currentUser?.name === 'ゲスト' && (
+                  {correctResult.user.id === currentUser?.id && currentUser?.name === 'ゲスト' && (
                     <Link
                       sx={{ textDecoration: 'none', width: 'fit-content', ':hover': { opacity: 0.7 } }}
                       href='/settings'
