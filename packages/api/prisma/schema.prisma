@@ -43,8 +43,9 @@ model Question {
   answers        Answer[]
   correctResults CorrectResult[]
 
-  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
-  updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamptz()
+  publishedAt DateTime @default(now()) @map("published_at") @db.Timestamptz()
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt   DateTime @default(now()) @map("updated_at") @db.Timestamptz()
 
   @@map("questions")
 }
