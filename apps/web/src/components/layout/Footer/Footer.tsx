@@ -18,10 +18,10 @@ export const Footer: FC = () => {
     >
       <Box display='flex' columnGap={3}>
         <Typography variant='body2' textAlign='center'>
-          <Link href='/'>プライバシーポリシー</Link>
+          <Link href='/privacy'>プライバシーポリシー</Link>
         </Typography>
         <Typography variant='body2' textAlign='center'>
-          <Link href='/'>お問い合わせ</Link>
+          <Link href='/inquiry'>お問い合わせ</Link>
         </Typography>
       </Box>
       <Typography variant='caption' textAlign='center'>
