@@ -6,6 +6,7 @@ export const createMockQuestion = (init: Partial<Question>): Question => {
     title: init.title || 'title',
     body: init.body || 'body',
     answer: init.answer || 'answer',
+    publishedAt: init.createdAt || new Date(),
     createdAt: init.createdAt || new Date(),
     updatedAt: init.updatedAt || new Date(),
   };
