@@ -1,4 +1,4 @@
-import { Stack, Typography } from '@mui/material';
+import { Box, Button, Link, Stack, Typography } from '@mui/material';
 import { listQuestionsForAdmin } from '~/actions/question';
 import { QuestionListForAdmin } from '~/components/models/question/QuestionListForAdmin';
 
@@ -7,9 +7,14 @@ export default async function Page() {
 
   return (
     <Stack pt={3} px={1} rowGap={3}>
-      <Typography variant='h5' textAlign='center' sx={{ fontWeight: 'bold' }}>
-        管理画面
-      </Typography>
+      <Box display='flex' justifyContent='space-between' alignItems='center'>
+        <Typography variant='h5' textAlign='center' sx={{ fontWeight: 'bold' }}>
+          管理画面
+        </Typography>
+        <Link href='/admin/new'>
+          <Button variant='contained'>新規作成</Button>
+        </Link>
+      </Box>
       <QuestionListForAdmin questions={questionsForAdmin} />
     </Stack>
   );
