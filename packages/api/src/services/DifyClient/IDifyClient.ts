@@ -4,6 +4,5 @@ export interface IDifyClient {
     questionTitle: string;
     questionBody: string;
     questionAnswer: string;
-    userId: string;
   }): Promise<string>;
 }

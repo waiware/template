@@ -33,7 +33,6 @@ export class GenerateReplyByBotUseCase {
       questionTitle: questionWithPosts.title,
       questionBody: questionWithPosts.body,
       questionAnswer: questionWithPosts.answer,
-      userId,
     });
 
     await this.prismaClient.post.create({
