@@ -1,11 +1,12 @@
 import { z } from 'zod';
 import { prismaClient } from '../libs/PrismaClientSingleton';
+import { DifyClient } from '../services/DifyClient';
 import { protectedProcedure, router } from '../trpc';
 import { CreatePostUseCase } from '../usecases/CreatePostUseCase';
 import { GenerateReplyByBotUseCase } from '../usecases/GenerateReplyByBotUseCase';
 
 const createPostUseCase = new CreatePostUseCase(prismaClient);
-const generateReplyByBotUseCase = new GenerateReplyByBotUseCase(prismaClient);
+const generateReplyByBotUseCase = new GenerateReplyByBotUseCase(prismaClient, new DifyClient());
 
 export const postRouter = router({
   findByQuestionId: protectedProcedure.input(z.object({ questionId: z.string() })).query(async ({ ctx, input }) => {
@@ -31,6 +32,7 @@ export const postRouter = router({
       });
 
       generateReplyByBotUseCase.execute({
+        body: input.body,
         userId: post.userId,
         questionId: post.questionId,
       });
