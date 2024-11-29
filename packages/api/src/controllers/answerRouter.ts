@@ -1,10 +1,15 @@
 import { z } from 'zod';
 import { prismaClient } from '../libs/PrismaClientSingleton';
 import { CorrectResultCreator } from '../services/CorrectResultCreator';
+import { DifyClient } from '../services/DifyClient';
 import { protectedProcedure, router } from '../trpc';
 import { CreateAnswerUseCase } from '../usecases/CreateAnswerUseCase';
 
-const createAnswerUseCase = new CreateAnswerUseCase(prismaClient, new CorrectResultCreator(prismaClient));
+const createAnswerUseCase = new CreateAnswerUseCase(
+  prismaClient,
+  new CorrectResultCreator(prismaClient),
+  new DifyClient(),
+);
 
 export const answerRouter = router({
   answer: protectedProcedure

@@ -1,32 +1,13 @@
 import type { PrismaClient } from '@prisma/client';
-const replys = [
-  'はい、そうです',
-  'いいえ、違います',
-  'その通りです',
-  '違います',
-  'はい、もちろんです',
-  'いいえ、絶対に違います',
-  'はい、そう思います',
-  'いいえ、そうは思いません',
-  'はい、確かに',
-  'いいえ、全く違います',
-  'はい、間違いありません',
-  'いいえ、そうではありません',
-  'はい、そうですね',
-  'いいえ、そうではないです',
-  'はい、そうかもしれません',
-  'いいえ、そうではないかもしれません',
-  'はい、そうですか',
-  'いいえ、そうではないですか',
-  'はい、そうだと思います',
-  'いいえ、そうではないと思います',
-];
+import type { IDifyClient } from '../../services/DifyClient/IDifyClient';
 
 export class GenerateReplyByBotUseCase {
-  constructor(private readonly prismaClient: PrismaClient) {}
+  constructor(
+    private readonly prismaClient: PrismaClient,
+    private readonly difyClient: IDifyClient,
+  ) {}
 
-  async execute({ questionId, userId }: { questionId: string; userId: string }) {
-    await new Promise(resolve => setTimeout(resolve, 1000));
+  async execute({ body, questionId, userId }: { body: string; questionId: string; userId: string }) {
     const questionWithPosts = await this.prismaClient.question.findFirst({
       where: {
         id: questionId,
@@ -47,7 +28,12 @@ export class GenerateReplyByBotUseCase {
       throw new Error('Question not found');
     }
 
-    const reply = replys[Math.floor(Math.random() * replys.length)];
+    const reply = await this.difyClient.replyYesOrNo({
+      post: body,
+      questionTitle: questionWithPosts.title,
+      questionBody: questionWithPosts.body,
+      questionAnswer: questionWithPosts.answer,
+    });
 
     await this.prismaClient.post.create({
       data: {
