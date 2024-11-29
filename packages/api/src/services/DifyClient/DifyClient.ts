@@ -27,6 +27,31 @@ export class DifyClient implements IDifyClient {
     );
   }
 
+  async judgeAnswer({
+    answer,
+    questionTitle,
+    questionBody,
+    questionAnswer,
+  }: {
+    answer: string;
+    questionTitle: string;
+    questionBody: string;
+    questionAnswer: string;
+  }): Promise<string> {
+    return await this.executeWithRetry(
+      async () =>
+        await this.postRequest({
+          key: 'app-nxS0AIZSdgRtvRFyfijEadi9',
+          inputs: {
+            answer,
+            questionTitle,
+            questionBody,
+            questionAnswer,
+          },
+        }),
+    );
+  }
+
   private async executeWithRetry(callback: () => Promise<string>) {
     return await callback()
       .catch(async () => await callback())
