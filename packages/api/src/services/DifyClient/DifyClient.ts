@@ -60,7 +60,7 @@ export class DifyClient implements IDifyClient {
         return await callback();
       })
       .catch((e: Error) => {
-        logger('Difyのリクエストに失敗しました', { callback });
+        logger('Difyのリクエストに失敗しました', { errorMessage: e.message, callback });
         throw e;
       });
   }
@@ -72,8 +72,6 @@ export class DifyClient implements IDifyClient {
     key: string;
     inputs: T;
   }): Promise<string> {
-    console.log(inputs, 49);
-
     const res = await fetch('https://api.dify.ai/v1/completion-messages', {
       method: 'POST',
       headers: {
@@ -87,6 +85,7 @@ export class DifyClient implements IDifyClient {
       }),
     });
 
+    logger('Difyのレスポンス', { key, inputs, res });
     if (!res.ok) {
       throw new Error('Failed to fetch Dify API');
     }
