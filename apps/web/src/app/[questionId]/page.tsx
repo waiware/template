@@ -29,7 +29,7 @@ export default async function Page({ params }: Props) {
   if (!question) return notFound();
 
   return (
-    <Stack height='calc(100vh - 56px)' overflow='scroll'>
+    <Stack height='calc(100vh - 56px)' sx={{ overflowY: 'scroll' }} maxWidth='500px' mx='auto'>
       <Stack px={1} flex={1}>
         <PageSubNavigation question={question} />
         <Stack rowGap={5} pb={3}>

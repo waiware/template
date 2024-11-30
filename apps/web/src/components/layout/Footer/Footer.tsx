@@ -9,7 +9,7 @@ export const Footer: FC = () => {
       sx={{
         pt: 5,
         pb: 2,
-        width: '100%',
+        left: 0,
         background: '#fff',
         borderBottom: props => `1px solid ${props.palette.divider}`,
         alignItems: 'center',

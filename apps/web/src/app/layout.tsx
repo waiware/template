@@ -1,4 +1,3 @@
-import { Box } from '@mui/material';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import { Navbar } from '~/components/layout/Navbar';
 import { generateMetadataObject } from '~/utils/generateMetadataObject';
@@ -19,9 +18,7 @@ export default async function RootLayout({
           <ThemeProvider>
             <SnackbarProvider>
               <Navbar />
-              <Box maxWidth='500px' mx='auto'>
-                {children}
-              </Box>
+              {children}
             </SnackbarProvider>
           </ThemeProvider>
         </AppRouterCacheProvider>
