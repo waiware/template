@@ -2,6 +2,8 @@ import { Box, Button, Link, Stack, Typography } from '@mui/material';
 import { listQuestionsForAdmin } from '~/actions/question';
 import { QuestionListForAdmin } from '~/components/models/question/QuestionListForAdmin';
 
+export const dynamic = 'force-dynamic';
+
 export default async function Page() {
   const questionsForAdmin = await listQuestionsForAdmin();
 
