@@ -29,18 +29,20 @@ export default async function Page({ params }: Props) {
   if (!question) return notFound();
 
   return (
-    <Stack px={1}>
-      <PageSubNavigation question={question} />
-      <Stack rowGap={5}>
-        <QuestionInformation question={question} />
-        <Stack rowGap={3} pb='240px'>
-          <PostList question={question} />
-          <DisplayResultOrAnswerButton question={question} />
+    <Stack height='calc(100vh - 56px)' overflow='scroll'>
+      <Stack px={1} flex={1}>
+        <PageSubNavigation question={question} />
+        <Stack rowGap={5} pb={3}>
+          <QuestionInformation question={question} />
+          <Stack rowGap={3}>
+            <PostList question={question} />
+            <DisplayResultOrAnswerButton question={question} />
+          </Stack>
         </Stack>
-        <AnswerBottomInputWrapper question={question}>
-          <AnswerBottomInput questionId={questionId} />
-        </AnswerBottomInputWrapper>
       </Stack>
+      <AnswerBottomInputWrapper question={question}>
+        <AnswerBottomInput questionId={questionId} />
+      </AnswerBottomInputWrapper>
     </Stack>
   );
 }

@@ -42,15 +42,7 @@ export const AnswerBottomInput: FC<Props> = ({ questionId }) => {
   });
 
   return (
-    <Stack
-      position='fixed'
-      bottom={0}
-      width='100%'
-      left={0}
-      p={2}
-      bgcolor='white'
-      sx={{ boxShadow: theme => theme.shadows[1] }}
-    >
+    <Stack width='100%' p={2} bgcolor='white' sx={{ boxShadow: theme => theme.shadows[1] }}>
       <Stack width='100%' maxWidth='500px' mx='auto' rowGap={1}>
         <Controller
           name='body'
