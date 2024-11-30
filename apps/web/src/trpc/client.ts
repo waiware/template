@@ -18,6 +18,7 @@ export const trpcClient = createTRPCProxyClient<AppRouter>({
           ...init,
           headers,
           credentials: 'include',
+          next: { revalidate: 60 },
         });
       },
     }),
