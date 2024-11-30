@@ -14,7 +14,9 @@ export default async function Page() {
           管理画面
         </Typography>
         <Link href='/admin/new'>
-          <Button variant='contained'>新規作成</Button>
+          <Button variant='contained' sx={{ fontWeight: 'bold' }}>
+            新規作成
+          </Button>
         </Link>
       </Box>
       <QuestionListForAdmin questions={questionsForAdmin} />
