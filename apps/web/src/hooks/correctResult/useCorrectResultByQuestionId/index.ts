@@ -1,1 +1,0 @@
-export { useCorrectResultByQuestionId } from './useCorrectResultByQuestionId';

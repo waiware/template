@@ -7,10 +7,6 @@ import { config } from 'dotenv';
 import express from 'express';
 import morgan from 'morgan';
 import { v4 } from 'uuid';
-import { answerRouter } from './controllers/answerRouter';
-import { correctResultRouter } from './controllers/correctResultRouter';
-import { postRouter } from './controllers/postRouter';
-import { questionRouter } from './controllers/questionRouter';
 import { userRouter } from './controllers/userRouter';
 import { logger } from './libs/logger';
 import { createContext, router } from './trpc';
@@ -18,10 +14,6 @@ import { createContext, router } from './trpc';
 config();
 
 const appRouter = router({
-  answer: answerRouter,
-  correctResult: correctResultRouter,
-  post: postRouter,
-  question: questionRouter,
   user: userRouter,
 });
 // export type definition of API

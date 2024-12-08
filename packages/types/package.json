@@ -9,6 +9,7 @@
   ],
   "scripts": {
     "build": "tsc",
+    "tsc": "tsc",
     "clean": "rm -rf dist",
     "dev": "tsc -w"
   },

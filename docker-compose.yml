@@ -1,7 +1,7 @@
 services:
   db:
     image: postgres
-    container_name: postgres_psychopath_master
+    container_name: postgres_template
     volumes:
       - db-store:/var/lib/postgresql/data
     ports:

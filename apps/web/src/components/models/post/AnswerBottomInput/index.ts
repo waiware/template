@@ -1,1 +1,0 @@
-export { AnswerBottomInput } from './AnswerBottomInput';

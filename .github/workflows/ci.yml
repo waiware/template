@@ -92,7 +92,7 @@ jobs:
 
       - name: override web env
         run: |
-          echo NEXT_PUBLIC_API_HOST="https://psychopath-master-api.wai-ware.com" > apps/web/.env
+          echo NEXT_PUBLIC_API_HOST="https://template-master-api.wai-ware.com" > apps/web/.env
 
       - name: yarn build
         run: |

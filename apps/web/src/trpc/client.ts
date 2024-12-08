@@ -6,7 +6,7 @@ import urlJoin from 'url-join';
 export const trpcClient = createTRPCProxyClient<AppRouter>({
   links: [
     httpBatchLink({
-      url: urlJoin(process.env.NEXT_PUBLIC_API_HOST || 'https://psychopath-master-api.wai-ware.com/', '/trpc'),
+      url: urlJoin(process.env.NEXT_PUBLIC_API_HOST || 'https://template-master-api.wai-ware.com/', '/trpc'),
       fetch: async (input, init) => {
         const headers: HeadersInit = {
           'Content-Type': 'application/json',

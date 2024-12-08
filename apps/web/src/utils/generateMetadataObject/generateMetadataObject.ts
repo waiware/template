@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 
 const DEFAULT_TITLE = 'サイコパスマスター';
 const DEFAULT_DESCRIPTION = 'サイコパス診断 × ウミガメのスープ';
-const DEFAULT_URL = 'https://psychopath-master.wai-ware.com/';
+const DEFAULT_URL = 'https://template-master.wai-ware.com/';
 
 type Args = {
   title?: string;

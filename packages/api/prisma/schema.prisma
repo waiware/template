@@ -33,69 +33,6 @@ generator zod {
   writeNullishInModelTypes         = false // default is false
 }
 
-model Question {
-  id     String @id @default(uuid())
-  title  String
-  body   String
-  answer String @default("") // 空文字で初期化
-
-  posts          Post[]
-  answers        Answer[]
-  correctResults CorrectResult[]
-
-  publishedAt DateTime @default(now()) @map("published_at") @db.Timestamptz()
-  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz()
-  updatedAt   DateTime @default(now()) @map("updated_at") @db.Timestamptz()
-
-  @@map("questions")
-}
-
-model Post {
-  id   String @id @default(uuid())
-  body String
-
-  questionId String   @map("question_id")
-  question   Question @relation(fields: [questionId], references: [id])
-
-  userId String @map("user_id") // ログインなしでも扱えるためlocalStorageに保存されたidを使う
-  user   User   @relation(fields: [userId], references: [id])
-
-  postType PostType @map("post_type")
-
-  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
-  updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamptz()
-
-  @@map("posts")
-}
-
-enum PostType {
-  USER
-  BOT
-
-  @@map("post_types")
-}
-
-model Answer {
-  id   String @id @default(uuid())
-  body String
-
-  questionId String   @map("question_id")
-  question   Question @relation(fields: [questionId], references: [id])
-
-  userId String @map("user_id")
-  user   User   @relation(fields: [userId], references: [id])
-
-  isCorrect Boolean @default(false) @map("is_correct") // 正解かどうか
-  isJudging Boolean @default(true) @map("is_judging") // 正誤判定中かどうか
-
-  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
-  updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamptz()
-
-  correctResults CorrectResult[]
-
-  @@map("answers")
-}
-
 model User {
   id   String @id @default(uuid())
   name String
@@ -103,30 +40,5 @@ model User {
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
   updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamptz()
 
-  post           Post[]
-  answers        Answer[]
-  correctResults CorrectResult[]
-
   @@map("users")
-}
-
-model CorrectResult {
-  id String @id @default(uuid())
-
-  questionId String   @map("question_id")
-  question   Question @relation(fields: [questionId], references: [id])
-
-  userId String @map("user_id")
-  user   User   @relation(fields: [userId], references: [id])
-
-  elapsedSeconds Int @map("elapsed_seconds") // 回答にかかった時間
-  numberOfPosts  Int @map("number_of_posts") // 質問数
-
-  answerId String @map("answer_id")
-  answer   Answer @relation(fields: [answerId], references: [id])
-
-  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
-  updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamptz()
-
-  @@map("correct_results")
 }

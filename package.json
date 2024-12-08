@@ -1,5 +1,5 @@
 {
-  "name": "psychopath_master",
+  "name": "template",
   "private": true,
   "workspaces": [
     "apps/*",
@@ -8,6 +8,7 @@
   "version": "0.1.0",
   "scripts": {
     "dev": "turbo run dev",
+    "tsc": "turbo run tsc",
     "build": "turbo run build && yarn format-and-lint:fix",
     "lint": "yarn format-and-lint",
     "lint:fix": "yarn format-and-lint:fix",

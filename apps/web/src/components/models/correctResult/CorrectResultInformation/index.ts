@@ -1,1 +1,0 @@
-export { CorrectResultInformation } from './CorrectResultInformation';
